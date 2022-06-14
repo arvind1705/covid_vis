@@ -9,19 +9,23 @@
         <canvas width="300" height="300" id="myChart"></canvas>
         <canvas width="300" height="300" id="myChart1"></canvas>
         <canvas width="300" height="300" id="myChart2"></canvas>
+        <canvas width="300" height="300" id="myChart3"></canvas>
       </div>
 
       <script>
-        const labels = ["January", "February", "March", "April", "May", "June"];
-
-        const covid_positive_labels = "{{covid_positive.labels|safe}}";
+        const covid_positive_labels = "{{covid_positive.labels|safe}}".split(
+          ","
+        );
         const covid_positive_data = "{{covid_positive.data|safe}}";
 
-        const deceased_labels = "{{deceased.labels|safe}}";
+        const deceased_labels = "{{deceased.labels|safe}}".split(",");
         const deceased_data = "{{deceased.data|safe}}";
 
-        const recovered_labels = "{{recovered.labels|safe}}";
+        const recovered_labels = "{{recovered.labels|safe}}".split(",");
         const recovered_data = "{{recovered.data|safe}}";
+
+        const active_labels = "{{recovered.labels|safe}}".split(",");
+        const active_data = "{{recovered.data|safe}}";
 
         const data = {
           labels: covid_positive_labels,
@@ -50,13 +54,13 @@
           },
         };
         const data1 = {
-          labels: deceased_labels,
+          labels: active_labels,
           datasets: [
             {
               label: "ACTIVE",
               backgroundColor: "orange",
               borderColor: "orange",
-              data: deceased_data,
+              data: active_data,
             },
           ],
         };
@@ -70,7 +74,7 @@
             plugins: {
               subtitle: {
                 display: true,
-                text: "{{deceased.sum|safe}}",
+                text: "{{active.sum|safe}}",
               },
             },
           },
@@ -101,6 +105,32 @@
             },
           },
         };
+        const data3 = {
+          labels: deceased_labels,
+          datasets: [
+            {
+              label: "DECEASED",
+              backgroundColor: "grey",
+              borderColor: "grey",
+              data: deceased_data,
+            },
+          ],
+        };
+
+        const config3 = {
+          type: "line",
+          data: data3,
+          options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+              subtitle: {
+                display: true,
+                text: "{{deceased.sum|safe}}",
+              },
+            },
+          },
+        };
       </script>
 
       <script>
@@ -112,6 +142,10 @@
         const myChart2 = new Chart(
           document.getElementById("myChart2"),
           config2
+        );
+        const myChart3 = new Chart(
+          document.getElementById("myChart3"),
+          config3
         );
       </script>
     </div>
