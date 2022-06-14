@@ -65,3 +65,6 @@ class Patient(models.Model):
         ("V", "Vaccination"),
     )
     case = models.CharField(max_length=1, choices=CASE_CHOICES)
+
+    def __str__(self):
+        return f"{self.name}"
