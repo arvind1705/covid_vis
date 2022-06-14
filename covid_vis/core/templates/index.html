@@ -4,10 +4,101 @@
   <main role="main" class="container">
     <div class="starter-template">
       <h1>Pandemic Visualiser Homepage</h1>
-      <p class="lead">
-        More details to be added soon.<br />
-        Check again tomorrow. Thanks.
-      </p>
+
+      <div class="d-flex">
+        <canvas width="300" height="300" id="myChart"></canvas>
+        <canvas width="300" height="300" id="myChart1"></canvas>
+        <canvas width="300" height="300" id="myChart2"></canvas>
+      </div>
+
+      <script>
+        const labels = ["January", "February", "March", "April", "May", "June"];
+
+        const data = {
+          labels: labels,
+          datasets: [
+            {
+              label: "CONFIRMED",
+              backgroundColor: "red",
+              borderColor: "red",
+              data: [0, 10, 5, 2, 20, 30, 45],
+            },
+          ],
+        };
+
+        const config = {
+          type: "line",
+          data: data,
+          options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+              subtitle: {
+                display: true,
+                text: "34,34,344",
+              },
+            },
+          },
+        };
+        const data1 = {
+          labels: labels,
+          datasets: [
+            {
+              label: "ACTIVE",
+              backgroundColor: "orange",
+              borderColor: "orange",
+              data: [0, 10, 5, 2, 20, 30, 45],
+            },
+          ],
+        };
+
+        const config1 = {
+          type: "line",
+          data: data1,
+          options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+              subtitle: {
+                display: true,
+                text: "300",
+              },
+            },
+          },
+        };
+        const data2 = {
+          labels: labels,
+          datasets: [
+            {
+              label: "RECOVERED",
+              backgroundColor: "green",
+              borderColor: "green",
+              data: [0, 10, 5, 2, 20, 30, 45],
+            },
+          ],
+        };
+
+        const config2 = {
+          type: "line",
+          data: data2,
+          options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+              subtitle: {
+                display: true,
+                text: "12,343",
+              },
+            },
+          },
+        };
+      </script>
+
+      <script>
+        const myChart = new Chart(document.getElementById("myChart"), config);
+        const myChart1 = new Chart(document.getElementById("myChart1"), config1);
+        const myChart2 = new Chart(document.getElementById("myChart2"), config2);
+      </script>
     </div>
   </main>
 </div>
