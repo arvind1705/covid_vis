@@ -14,14 +14,23 @@
       <script>
         const labels = ["January", "February", "March", "April", "May", "June"];
 
+        const covid_positive_labels = "{{covid_positive.labels|safe}}";
+        const covid_positive_data = "{{covid_positive.data|safe}}";
+
+        const deceased_labels = "{{deceased.labels|safe}}";
+        const deceased_data = "{{deceased.data|safe}}";
+
+        const recovered_labels = "{{recovered.labels|safe}}";
+        const recovered_data = "{{recovered.data|safe}}";
+
         const data = {
-          labels: labels,
+          labels: covid_positive_labels,
           datasets: [
             {
               label: "CONFIRMED",
               backgroundColor: "red",
               borderColor: "red",
-              data: [0, 10, 5, 2, 20, 30, 45],
+              data: covid_positive_data,
             },
           ],
         };
@@ -35,19 +44,19 @@
             plugins: {
               subtitle: {
                 display: true,
-                text: "34,34,344",
+                text: "{{covid_positive.sum|safe}}",
               },
             },
           },
         };
         const data1 = {
-          labels: labels,
+          labels: deceased_labels,
           datasets: [
             {
               label: "ACTIVE",
               backgroundColor: "orange",
               borderColor: "orange",
-              data: [0, 10, 5, 2, 20, 30, 45],
+              data: deceased_data,
             },
           ],
         };
@@ -61,19 +70,19 @@
             plugins: {
               subtitle: {
                 display: true,
-                text: "300",
+                text: "{{deceased.sum|safe}}",
               },
             },
           },
         };
         const data2 = {
-          labels: labels,
+          labels: recovered_labels,
           datasets: [
             {
               label: "RECOVERED",
               backgroundColor: "green",
               borderColor: "green",
-              data: [0, 10, 5, 2, 20, 30, 45],
+              data: recovered_data,
             },
           ],
         };
@@ -87,7 +96,7 @@
             plugins: {
               subtitle: {
                 display: true,
-                text: "12,343",
+                text: "{{recovered.sum|safe}}",
               },
             },
           },
@@ -96,8 +105,14 @@
 
       <script>
         const myChart = new Chart(document.getElementById("myChart"), config);
-        const myChart1 = new Chart(document.getElementById("myChart1"), config1);
-        const myChart2 = new Chart(document.getElementById("myChart2"), config2);
+        const myChart1 = new Chart(
+          document.getElementById("myChart1"),
+          config1
+        );
+        const myChart2 = new Chart(
+          document.getElementById("myChart2"),
+          config2
+        );
       </script>
     </div>
   </main>
