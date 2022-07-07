@@ -1,38 +1,39 @@
 # Create your views here.
 from django.db.models import Count
-from django.db.models.functions import TruncDay, TruncHour
+from django.db.models.functions import TruncDay
 from django.shortcuts import render
 
 from .models import Patient
-from .utils import faker_data
+
+# from .utils import faker_data
 
 
 # views.py
 def index(request):
     covid_positive_count_by_day = (
         Patient.objects.filter(covid_positive=True)
-        .annotate(day=TruncHour("created_at"))
+        .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("covid_positive"))
         .values("day", "c")
     )
     deceased_count_by_day = (
         Patient.objects.filter(deceased=True)
-        .annotate(day=TruncHour("created_at"))
+        .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("deceased"))
         .values("day", "c")
     )
     recovered_count_by_day = (
         Patient.objects.filter(recovered=True)
-        .annotate(day=TruncHour("created_at"))
+        .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("recovered"))
         .values("day", "c")
     )
     active_count_by_day = (
         Patient.objects.filter(recovered=False, covid_positive=True)
-        .annotate(day=TruncHour("created_at"))
+        .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("recovered"))
         .values("day", "c")
