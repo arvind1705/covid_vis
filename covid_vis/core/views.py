@@ -1,7 +1,10 @@
 # Create your views here.
+import datetime
+
 from django.db.models import Count
 from django.db.models.functions import TruncDay
 from django.shortcuts import render
+from django.utils import timezone as tz
 
 from .models import Patient
 
@@ -10,29 +13,30 @@ from .models import Patient
 
 # views.py
 def index(request):
+    d = tz.now() - datetime.timedelta(days=10)
     covid_positive_count_by_day = (
-        Patient.objects.filter(covid_positive=True)
+        Patient.objects.filter(covid_positive=True, updated_at__lt=d)
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("covid_positive"))
         .values("day", "c")
     )
     deceased_count_by_day = (
-        Patient.objects.filter(deceased=True)
+        Patient.objects.filter(deceased=True, updated_at__lt=d)
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("deceased"))
         .values("day", "c")
     )
     recovered_count_by_day = (
-        Patient.objects.filter(recovered=True)
+        Patient.objects.filter(recovered=True, updated_at__lt=d)
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("recovered"))
         .values("day", "c")
     )
     active_count_by_day = (
-        Patient.objects.filter(recovered=False, covid_positive=True)
+        Patient.objects.filter(recovered=False, covid_positive=True, updated_at__lt=d)
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("recovered"))
