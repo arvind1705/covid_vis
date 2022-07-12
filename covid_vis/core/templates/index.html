@@ -14,7 +14,11 @@
 
       </div>
 
-      {% render_table table %}
+      <!-- {% render_table table %} -->
+
+      <div style="width: 500px; height: 500px; overflow-y: scroll;">
+        {% render_table table %}
+      </div>
 
       <script>
         const covid_positive_labels = "{{covid_positive.labels|safe}}".split(

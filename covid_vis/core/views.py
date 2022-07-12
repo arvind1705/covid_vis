@@ -17,6 +17,7 @@ class HospitalTable(tables.Table):
     class Meta:
         model = Hospital
         fields = ("name", "total_no_of_beds", "bed_occupied", "beds_available")
+        template_name = "django_tables2/semantic.html"
 
 
 # views.py
