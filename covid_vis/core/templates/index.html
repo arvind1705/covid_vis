@@ -14,22 +14,21 @@
       </div>
 
       <!-- {% render_table table %} -->
-    <div class="d-flex">
-      <div class="d-flex flex-column justify-content-center">
-        <div>List of Hospitals</div>
-        <div style="width: 500px; height: 500px; overflow-y: scroll">
-          {% render_table table %}
+      <div class="d-flex">
+        <div class="d-flex flex-column justify-content-center">
+          <div>List of Hospitals</div>
+          <div style="width: 500px; height: 500px; overflow-y: scroll">
+            {% render_table table %}
+          </div>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center">
+          <div>Covid Care Centers</div>
+          <div style="width: 500px; height: 500px; overflow-y: scroll">
+            {% render_table table2 %}
+          </div>
         </div>
       </div>
-
-      <div class="d-flex flex-column justify-content-center">
-        <div>Covid Care Centers</div>
-        <div style="width: 500px; height: 500px; overflow-y: scroll">
-          {% render_table table2 %}
-        </div>
-      </div>
-
-    </div>
 
       <script>
         const covid_positive_labels = "{{covid_positive.labels|safe}}".split(
@@ -69,7 +68,9 @@
                 display: true,
                 text: "{{covid_positive.sum|safe}}",
               },
+              legend: { labels: { font: { size: 14 } } },
             },
+            scales: { y: { display: false }, x: { display: false } },
           },
         };
         const data1 = {
@@ -95,7 +96,9 @@
                 display: true,
                 text: "{{active.sum|safe}}",
               },
+              legend: { labels: { font: { size: 14 } } },
             },
+            scales: { y: { display: false }, x: { display: false } },
           },
         };
         const data2 = {
@@ -121,7 +124,9 @@
                 display: true,
                 text: "{{recovered.sum|safe}}",
               },
+              legend: { labels: { font: { size: 14 } } },
             },
+            scales: { y: { display: false }, x: { display: false } },
           },
         };
         const data3 = {
@@ -147,7 +152,9 @@
                 display: true,
                 text: "{{deceased.sum|safe}}",
               },
+              legend: { labels: { font: { size: 14 } } },
             },
+            scales: { y: { display: false }, x: { display: false } },
           },
         };
       </script>
