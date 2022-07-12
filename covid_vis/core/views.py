@@ -12,11 +12,17 @@ from .models import Hospital, Patient
 # from .utils import faker_data
 
 
-
 class HospitalTable(tables.Table):
     class Meta:
         model = Hospital
         fields = ("name", "total_no_of_beds", "bed_occupied", "beds_available")
+        template_name = "django_tables2/semantic.html"
+
+
+class CareCenterTable(tables.Table):
+    class Meta:
+        model = Hospital
+        fields = ("name", "phone")
         template_name = "django_tables2/semantic.html"
 
 
@@ -53,6 +59,7 @@ def index(request):
     )
 
     table = HospitalTable(Hospital.objects.all())
+    table2 = CareCenterTable(Hospital.objects.all())
 
     data = {}
 
@@ -61,6 +68,7 @@ def index(request):
     data.update({"recovered": get_label_data(recovered_count_by_day)})
     data.update({"active": get_label_data(active_count_by_day)})
     data.update({"table": table})
+    data.update({"table2": table2})
 
     return render(request, "index.html", data)
 
