@@ -54,7 +54,7 @@ def get_label_data(data):
     labels = []
     datas = []
     for day in data:
-        labels.append(day["day"].strftime("%H"))
+        labels.append(day["day"].strftime("%d"))
         datas.append(day["c"])
     print(labels, datas)
     return {"labels": ",".join(labels), "data": datas, "sum": sum(datas)}
