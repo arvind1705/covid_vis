@@ -59,7 +59,7 @@ def index(request):
     )
 
     table = HospitalTable(Hospital.objects.all())
-    table2 = CareCenterTable(Hospital.objects.all())
+    table2 = CareCenterTable(Hospital.objects.filter(is_covid_care_center=True))
 
     data = {}
 
