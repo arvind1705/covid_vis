@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} 
+{% load render_table from django_tables2 %}
 
 <div class="container">
   <main role="main" class="container">
@@ -10,7 +11,10 @@
         <canvas width="300" height="300" id="myChart1"></canvas>
         <canvas width="300" height="300" id="myChart2"></canvas>
         <canvas width="300" height="300" id="myChart3"></canvas>
+
       </div>
+
+      {% render_table table %}
 
       <script>
         const covid_positive_labels = "{{covid_positive.labels|safe}}".split(

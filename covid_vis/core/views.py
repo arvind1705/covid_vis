@@ -1,14 +1,22 @@
 # Create your views here.
 import datetime
 
+import django_tables2 as tables
 from django.db.models import Count
 from django.db.models.functions import TruncDay
 from django.shortcuts import render
 from django.utils import timezone as tz
 
-from .models import Patient
+from .models import Hospital, Patient
 
 # from .utils import faker_data
+
+
+
+class HospitalTable(tables.Table):
+    class Meta:
+        model = Hospital
+        fields = ("name", "total_no_of_beds", "bed_occupied", "beds_available")
 
 
 # views.py
@@ -43,12 +51,15 @@ def index(request):
         .values("day", "c")
     )
 
+    table = HospitalTable(Hospital.objects.all())
+
     data = {}
 
     data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
     data.update({"deceased": get_label_data(deceased_count_by_day)})
     data.update({"recovered": get_label_data(recovered_count_by_day)})
     data.update({"active": get_label_data(active_count_by_day)})
+    data.update({"table": table})
 
     return render(request, "index.html", data)
 
