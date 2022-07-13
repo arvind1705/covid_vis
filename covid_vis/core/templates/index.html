@@ -14,14 +14,18 @@
       </div>
 
       <div class="d-flex">
-        <div class="d-flex flex-column justify-content-center">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
           <div>List of Hospitals</div>
           <div style="width: 500px; height: 500px; overflow-y: scroll">
             {% render_table hospitals_list %}
           </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-center">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
           <div>Covid Care Centers</div>
           <div style="width: 500px; height: 500px; overflow-y: scroll">
             {% render_table care_center_list %}
@@ -30,7 +34,13 @@
       </div>
 
       <div class="d-flex">
-        <canvas width="300" height="300" id="pie_chart"></canvas>
+        <div class="d-flex flex-column">
+          <canvas width="300" height="300" id="pie_chart"></canvas>
+        </div>
+
+        <div class="d-flex flex-column">
+          <canvas width="300" height="300" id="vaccine_chart"></canvas>
+        </div>
       </div>
 
       <script>
@@ -50,6 +60,9 @@
 
         const pie_labels = "{{age_data.labels|safe}}".split(",");
         const pie_data_set = "{{age_data.data|safe}}".split(",");
+
+        const vaccine_labels = "{{vaccine_data.labels|safe}}".split(",");
+        const vaccine_data_set = "{{vaccine_data.data|safe}}".split(",");
 
         const data = {
           labels: covid_positive_labels,
@@ -184,13 +197,58 @@
           ],
         };
 
+        const vaccine_data = {
+          labels: vaccine_labels,
+          datasets: [
+            {
+              // label: "My First Dataset",
+              data: vaccine_data_set,
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+                "rgb(75, 192, 192)",
+                "rgb(153, 102, 255)",
+              ],
+            },
+          ],
+        };
+
         const pie_config = {
           type: "pie",
           data: pie_data,
           options: {
             responsive: false,
-            maintainAspectRatio: false
-          }
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+              title: {
+                display: true,
+                text: "Age Wise Distribution of Covid Patients",
+              },
+            },
+          },
+        };
+
+        const vaccine_config = {
+          type: "bar",
+          data: vaccine_data,
+          options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "top",
+                display: false,
+              },
+              title: {
+                display: true,
+                text: "Vaccination Coverage",
+              },
+            },
+          },
         };
       </script>
 
@@ -212,6 +270,11 @@
         const pie_chart = new Chart(
           document.getElementById("pie_chart"),
           pie_config
+        );
+
+        const vaccine_chart = new Chart(
+          document.getElementById("vaccine_chart"),
+          vaccine_config
         );
       </script>
     </div>

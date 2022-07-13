@@ -93,6 +93,35 @@ def index(request):
         "data": ",".join(age_data.values()),
     }
 
+    first_vaccinated_count = Patient.objects.filter(vaccination_status="F").count()
+    second_vaccinated_count = Patient.objects.filter(vaccination_status="S").count()
+    precautions_count = Patient.objects.filter(vaccination_status="P").count()
+    total_vaccine_count = (
+        first_vaccinated_count + second_vaccinated_count + precautions_count
+    )
+
+    total_patients = Patient.objects.count()
+
+    not_vaccinated_count = (
+        total_patients
+        - first_vaccinated_count
+        - second_vaccinated_count
+        - precautions_count
+    )
+
+    vaccine_data = {
+        "Total": str(total_vaccine_count),
+        "First Dose": str(first_vaccinated_count),
+        "Second Dose": str(second_vaccinated_count),
+        "Precaution Dose": str(precautions_count),
+        "Not Vaccinated": str(not_vaccinated_count),
+    }
+
+    vaccine_data = {
+        "labels": ",".join(vaccine_data.keys()),
+        "data": ",".join(vaccine_data.values()),
+    }
+
     data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
     data.update({"deceased": get_label_data(deceased_count_by_day)})
     data.update({"recovered": get_label_data(recovered_count_by_day)})
@@ -100,6 +129,7 @@ def index(request):
     data.update({"hospitals_list": hospitals_list})
     data.update({"care_center_list": care_center_list})
     data.update({"age_data": age_data})
+    data.update({"vaccine_data": vaccine_data})
 
     return render(request, "index.html", data)
 
