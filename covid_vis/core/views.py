@@ -2,14 +2,13 @@
 import datetime
 
 import django_tables2 as tables
+from dateutil.relativedelta import relativedelta
 from django.db.models import Count
 from django.db.models.functions import TruncDay
 from django.shortcuts import render
 from django.utils import timezone as tz
 
 from .models import Hospital, Patient
-
-# from .utils import faker_data
 
 
 class HospitalTable(tables.Table):
@@ -29,6 +28,9 @@ class CareCenterTable(tables.Table):
 # views.py
 def index(request):
     d = tz.now() - datetime.timedelta(days=10)
+    today = datetime.date.today()
+    data = {}
+
     covid_positive_count_by_day = (
         Patient.objects.filter(covid_positive=True, updated_at__lt=d)
         .annotate(day=TruncDay("created_at"))
@@ -58,27 +60,54 @@ def index(request):
         .values("day", "c")
     )
 
-    table = HospitalTable(Hospital.objects.all())
-    table2 = CareCenterTable(Hospital.objects.filter(is_covid_care_center=True))
+    hospitals_list = HospitalTable(Hospital.objects.all())
+    care_center_list = CareCenterTable(
+        Hospital.objects.filter(is_covid_care_center=True)
+    )
 
-    data = {}
+    age_0_18 = Patient.objects.filter(
+        dob__lte=today - relativedelta(years=1),
+        dob__gte=today - relativedelta(years=18),
+    ).count()
+    age_19_40 = Patient.objects.filter(
+        dob__lte=today - relativedelta(years=19),
+        dob__gte=today - relativedelta(years=40),
+    ).count()
+    age_41_60 = Patient.objects.filter(
+        dob__lte=today - relativedelta(years=41),
+        dob__gte=today - relativedelta(years=60),
+    ).count()
+    age_61_100 = Patient.objects.filter(
+        dob__lte=today - relativedelta(years=61),
+        dob__gte=today - relativedelta(years=100),
+    ).count()
+
+    age_data = {
+        "0-18": str(age_0_18),
+        "19-40": str(age_19_40),
+        "41-60": str(age_41_60),
+        "Above 60": str(age_61_100),
+    }
+    age_data = {
+        "labels": ",".join(age_data.keys()),
+        "data": ",".join(age_data.values()),
+    }
 
     data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
     data.update({"deceased": get_label_data(deceased_count_by_day)})
     data.update({"recovered": get_label_data(recovered_count_by_day)})
     data.update({"active": get_label_data(active_count_by_day)})
-    data.update({"table": table})
-    data.update({"table2": table2})
+    data.update({"hospitals_list": hospitals_list})
+    data.update({"care_center_list": care_center_list})
+    data.update({"age_data": age_data})
 
     return render(request, "index.html", data)
 
 
 def get_label_data(data):
-    # faker_data()
     labels = []
     datas = []
     for day in data:
         labels.append(day["day"].strftime("%d"))
         datas.append(day["c"])
-    print(labels, datas)
     return {"labels": ",".join(labels), "data": datas, "sum": sum(datas)}

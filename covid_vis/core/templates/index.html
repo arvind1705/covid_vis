@@ -13,21 +13,24 @@
         <canvas width="300" height="300" id="myChart3"></canvas>
       </div>
 
-      <!-- {% render_table table %} -->
       <div class="d-flex">
         <div class="d-flex flex-column justify-content-center">
           <div>List of Hospitals</div>
           <div style="width: 500px; height: 500px; overflow-y: scroll">
-            {% render_table table %}
+            {% render_table hospitals_list %}
           </div>
         </div>
 
         <div class="d-flex flex-column justify-content-center">
           <div>Covid Care Centers</div>
           <div style="width: 500px; height: 500px; overflow-y: scroll">
-            {% render_table table2 %}
+            {% render_table care_center_list %}
           </div>
         </div>
+      </div>
+
+      <div class="d-flex">
+        <canvas width="300" height="300" id="pie_chart"></canvas>
       </div>
 
       <script>
@@ -45,6 +48,9 @@
         const active_labels = "{{recovered.labels|safe}}".split(",");
         const active_data = "{{recovered.data|safe}}";
 
+        const pie_labels = "{{age_data.labels|safe}}".split(",");
+        const pie_data_set = "{{age_data.data|safe}}".split(",");
+
         const data = {
           labels: covid_positive_labels,
           datasets: [
@@ -53,7 +59,7 @@
               backgroundColor: "red",
               borderColor: "red",
               data: covid_positive_data,
-              spanGaps: true
+              spanGaps: true,
             },
           ],
         };
@@ -82,7 +88,7 @@
               backgroundColor: "orange",
               borderColor: "orange",
               data: active_data,
-              spanGaps: true
+              spanGaps: true,
             },
           ],
         };
@@ -111,7 +117,7 @@
               backgroundColor: "green",
               borderColor: "green",
               data: recovered_data,
-              spanGaps: true
+              spanGaps: true,
             },
           ],
         };
@@ -140,7 +146,7 @@
               backgroundColor: "grey",
               borderColor: "grey",
               data: deceased_data,
-              spanGaps: true
+              spanGaps: true,
             },
           ],
         };
@@ -161,6 +167,31 @@
             scales: { y: { display: true }, x: { display: false } },
           },
         };
+
+        const pie_data = {
+          labels: pie_labels,
+          datasets: [
+            {
+              label: "My First Dataset",
+              data: pie_data_set,
+              backgroundColor: [
+                "rgb(255, 99, 132)",
+                "rgb(54, 162, 235)",
+                "rgb(255, 205, 86)",
+                "rgb(75, 192, 192)",
+              ],
+            },
+          ],
+        };
+
+        const pie_config = {
+          type: "pie",
+          data: pie_data,
+          options: {
+            responsive: false,
+            maintainAspectRatio: false
+          }
+        };
       </script>
 
       <script>
@@ -176,6 +207,11 @@
         const myChart3 = new Chart(
           document.getElementById("myChart3"),
           config3
+        );
+
+        const pie_chart = new Chart(
+          document.getElementById("pie_chart"),
+          pie_config
         );
       </script>
     </div>
