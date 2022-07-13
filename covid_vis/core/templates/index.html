@@ -7,10 +7,10 @@
       <!-- <h1>Pandemic Visualiser Homepage</h1> -->
 
       <div class="d-flex">
-        <canvas width="300" height="300" id="myChart"></canvas>
-        <canvas width="300" height="300" id="myChart1"></canvas>
-        <canvas width="300" height="300" id="myChart2"></canvas>
-        <canvas width="300" height="300" id="myChart3"></canvas>
+        <canvas width="300" height="300" id="confirmed_chart"></canvas>
+        <canvas width="300" height="300" id="active_chart"></canvas>
+        <canvas width="300" height="300" id="recovered_chart"></canvas>
+        <canvas width="300" height="300" id="deceased_chart"></canvas>
       </div>
 
       <div class="d-flex">
@@ -47,16 +47,16 @@
         const covid_positive_labels = "{{covid_positive.labels|safe}}".split(
           ","
         );
-        const covid_positive_data = "{{covid_positive.data|safe}}";
+        const covid_positive_data_set = "{{covid_positive.data|safe}}";
 
         const deceased_labels = "{{deceased.labels|safe}}".split(",");
-        const deceased_data = "{{deceased.data|safe}}";
+        const deceased_data_set = "{{deceased.data|safe}}";
 
         const recovered_labels = "{{recovered.labels|safe}}".split(",");
-        const recovered_data = "{{recovered.data|safe}}";
+        const recovered_data_set = "{{recovered.data|safe}}";
 
-        const active_labels = "{{recovered.labels|safe}}".split(",");
-        const active_data = "{{recovered.data|safe}}";
+        const active_labels = "{{active.labels|safe}}".split(",");
+        const active_data_set = "{{active.data|safe}}";
 
         const pie_labels = "{{age_data.labels|safe}}".split(",");
         const pie_data_set = "{{age_data.data|safe}}".split(",");
@@ -64,22 +64,22 @@
         const vaccine_labels = "{{vaccine_data.labels|safe}}".split(",");
         const vaccine_data_set = "{{vaccine_data.data|safe}}".split(",");
 
-        const data = {
+        const covid_positive_data = {
           labels: covid_positive_labels,
           datasets: [
             {
               label: "CONFIRMED",
               backgroundColor: "red",
               borderColor: "red",
-              data: covid_positive_data,
+              data: covid_positive_data_set,
               spanGaps: true,
             },
           ],
         };
 
-        const config = {
+        const covid_positive_config = {
           type: "line",
-          data: data,
+          data: covid_positive_data,
           options: {
             responsive: false,
             maintainAspectRatio: false,
@@ -93,22 +93,22 @@
             scales: { y: { display: true }, x: { display: false } },
           },
         };
-        const data1 = {
+        const active_data = {
           labels: active_labels,
           datasets: [
             {
               label: "ACTIVE",
               backgroundColor: "orange",
               borderColor: "orange",
-              data: active_data,
+              data: active_data_set,
               spanGaps: true,
             },
           ],
         };
 
-        const config1 = {
+        const active_config = {
           type: "line",
-          data: data1,
+          data: active_data,
           options: {
             responsive: false,
             maintainAspectRatio: false,
@@ -122,22 +122,22 @@
             scales: { y: { display: true }, x: { display: false } },
           },
         };
-        const data2 = {
+        const recovered_data = {
           labels: recovered_labels,
           datasets: [
             {
               label: "RECOVERED",
               backgroundColor: "green",
               borderColor: "green",
-              data: recovered_data,
+              data: recovered_data_set,
               spanGaps: true,
             },
           ],
         };
 
-        const config2 = {
+        const recovered_config = {
           type: "line",
-          data: data2,
+          data: recovered_data,
           options: {
             responsive: false,
             maintainAspectRatio: false,
@@ -151,22 +151,22 @@
             scales: { y: { display: true }, x: { display: false } },
           },
         };
-        const data3 = {
+        const deceased_data = {
           labels: deceased_labels,
           datasets: [
             {
               label: "DECEASED",
               backgroundColor: "grey",
               borderColor: "grey",
-              data: deceased_data,
+              data: deceased_data_set,
               spanGaps: true,
             },
           ],
         };
 
-        const config3 = {
+        const deceased_config = {
           type: "line",
-          data: data3,
+          data: deceased_data,
           options: {
             responsive: false,
             maintainAspectRatio: false,
@@ -185,7 +185,6 @@
           labels: pie_labels,
           datasets: [
             {
-              label: "My First Dataset",
               data: pie_data_set,
               backgroundColor: [
                 "rgb(255, 99, 132)",
@@ -253,18 +252,21 @@
       </script>
 
       <script>
-        const myChart = new Chart(document.getElementById("myChart"), config);
-        const myChart1 = new Chart(
-          document.getElementById("myChart1"),
-          config1
+        const confirmed_chart = new Chart(
+          document.getElementById("confirmed_chart"),
+          covid_positive_config
         );
-        const myChart2 = new Chart(
-          document.getElementById("myChart2"),
-          config2
+        const active_chart = new Chart(
+          document.getElementById("active_chart"),
+          active_config
         );
-        const myChart3 = new Chart(
-          document.getElementById("myChart3"),
-          config3
+        const recovered_chart = new Chart(
+          document.getElementById("recovered_chart"),
+          recovered_config
+        );
+        const deceased_chart = new Chart(
+          document.getElementById("deceased_chart"),
+          deceased_config
         );
 
         const pie_chart = new Chart(

@@ -18,4 +18,8 @@ from django.urls import path, re_path
 
 from covid_vis.core import views
 
-urlpatterns = [path("admin/", admin.site.urls), re_path("", views.index, name="index")]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("hospital/", views.hospital, name="hospital"),
+    re_path("", views.index, name="index"),
+]

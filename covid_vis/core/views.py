@@ -134,9 +134,13 @@ def index(request):
     return render(request, "index.html", data)
 
 
+def hospital(request):
+    hospital_data = Hospital.objects.all()
+    return render(request, "hospital.html", {"hospital_data": hospital_data})
+
+
 def get_label_data(data):
-    labels = []
-    datas = []
+    labels, datas = [], []
     for day in data:
         labels.append(day["day"].strftime("%d"))
         datas.append(day["c"])
