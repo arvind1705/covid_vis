@@ -82,9 +82,7 @@ def index(request):
         .values("day", "c")
     )
     active_count_by_day = (
-        Patient.objects.filter(
-            recovered=False, covid_positive=True
-        )
+        Patient.objects.filter(recovered=False, covid_positive=True)
         .annotate(day=TruncDay("updated_at"))
         .values("day")
         .annotate(c=Count("recovered"))
@@ -194,7 +192,7 @@ def get_label_data(data):
     """
     labels, datas, count = [], [], 0
     for day in data:
-        labels.append(day["day"].strftime("%d"))
+        labels.append(day["day"].strftime("%d %b"))
         datas.append(str(day["c"]))
         count += day["c"]
     return {"labels": ",".join(labels), "data": ",".join(datas), "sum": count}
