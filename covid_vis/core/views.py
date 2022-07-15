@@ -92,7 +92,7 @@ def index(request):
 
 def hospital(request):
     hospitals_list = HospitalTable(Hospital.objects.all())
-    hospitals_list.paginate(page=request.GET.get("page", 1), per_page=25)
+    hospitals_list.paginate(page=request.GET.get("page", 1), per_page=10)
     return render(request, "hospital.html", {"hospitals_list": hospitals_list})
 
 
