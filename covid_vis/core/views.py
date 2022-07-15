@@ -60,21 +60,21 @@ def index(request):
 
     covid_positive_count_by_day = (
         Patient.objects.filter(covid_positive=True, updated_at__lt=date_delta)
-        .annotate(day=TruncDay("created_at"))
+        .annotate(day=TruncDay("updated_at"))
         .values("day")
         .annotate(c=Count("covid_positive"))
         .values("day", "c")
     )
     deceased_count_by_day = (
         Patient.objects.filter(deceased=True, updated_at__lt=date_delta)
-        .annotate(day=TruncDay("created_at"))
+        .annotate(day=TruncDay("updated_at"))
         .values("day")
         .annotate(c=Count("deceased"))
         .values("day", "c")
     )
     recovered_count_by_day = (
         Patient.objects.filter(recovered=True, updated_at__lt=date_delta)
-        .annotate(day=TruncDay("created_at"))
+        .annotate(day=TruncDay("updated_at"))
         .values("day")
         .annotate(c=Count("recovered"))
         .values("day", "c")
@@ -83,7 +83,7 @@ def index(request):
         Patient.objects.filter(
             recovered=False, covid_positive=True, updated_at__lt=date_delta
         )
-        .annotate(day=TruncDay("created_at"))
+        .annotate(day=TruncDay("updated_at"))
         .values("day")
         .annotate(c=Count("recovered"))
         .values("day", "c")
