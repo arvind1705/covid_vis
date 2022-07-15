@@ -2,7 +2,7 @@
 
 Requirements:
 
-1. Python 3.6 or higher (Refer to this link to download and install Python: https://www.python.org/downloads/release/python-366/)
+1. Python 3.6 or higher (Refer to this link to download and install Python: https://www.python.org/downloads/)
 2. Pip (Python package manager) usually gets installed along with python. If pip is not installed on your machine then follow the instructions in this link to install pip: https://www.makeuseof.com/tag/install-pip-for-python/
 
 ## Steps to setup the project server locally (One time setup)
