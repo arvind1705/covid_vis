@@ -13,16 +13,18 @@
         const covid_positive_labels = "{{covid_positive.labels|safe}}".split(
           ","
         );
-        const covid_positive_data_set = "{{covid_positive.data|safe}}";
+        const covid_positive_data_set = "{{covid_positive.data|safe}}".split(
+          ","
+        );
 
         const deceased_labels = "{{deceased.labels|safe}}".split(",");
-        const deceased_data_set = "{{deceased.data|safe}}";
+        const deceased_data_set = "{{deceased.data|safe}}".split(",");
 
         const recovered_labels = "{{recovered.labels|safe}}".split(",");
-        const recovered_data_set = "{{recovered.data|safe}}";
+        const recovered_data_set = "{{recovered.data|safe}}".split(",");
 
         const active_labels = "{{active.labels|safe}}".split(",");
-        const active_data_set = "{{active.data|safe}}";
+        const active_data_set = "{{active.data|safe}}".split(",");
 
         const pie_labels = "{{age_data.labels|safe}}".split(",");
         const pie_data_set = "{{age_data.data|safe}}".split(",");

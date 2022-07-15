@@ -190,11 +190,12 @@ def get_label_data(data):
     Returns:
         _type_: _description_
     """
-    labels, datas = [], []
+    labels, datas, count = [], [], 0
     for day in data:
         labels.append(day["day"].strftime("%d"))
-        datas.append(day["c"])
-    return {"labels": ",".join(labels), "data": datas, "sum": sum(datas)}
+        datas.append(str(day["c"]))
+        count += day["c"]
+    return {"labels": ",".join(labels), "data": ",".join(datas), "sum": count}
 
 
 def links(request):
