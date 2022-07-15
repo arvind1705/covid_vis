@@ -28,7 +28,6 @@ class CareCenterTable(tables.Table):
 # views.py
 def index(request):
     d = tz.now() - datetime.timedelta(days=10)
-    today = datetime.date.today()
     data = {}
 
     covid_positive_count_by_day = (
@@ -64,6 +63,25 @@ def index(request):
     care_center_list = CareCenterTable(
         Hospital.objects.filter(is_covid_care_center=True)
     )
+
+    data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
+    data.update({"deceased": get_label_data(deceased_count_by_day)})
+    data.update({"recovered": get_label_data(recovered_count_by_day)})
+    data.update({"active": get_label_data(active_count_by_day)})
+    data.update({"hospitals_list": hospitals_list})
+    data.update({"care_center_list": care_center_list})
+
+    return render(request, "index.html", data)
+
+
+def hospital(request):
+    hospital_data = Hospital.objects.all()
+    return render(request, "hospital.html", {"hospital_data": hospital_data})
+
+
+def graphs(request):
+    today = datetime.date.today()
+    data = {}
 
     age_0_18 = Patient.objects.filter(
         dob__lte=today - relativedelta(years=1),
@@ -122,21 +140,9 @@ def index(request):
         "data": ",".join(vaccine_data.values()),
     }
 
-    data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
-    data.update({"deceased": get_label_data(deceased_count_by_day)})
-    data.update({"recovered": get_label_data(recovered_count_by_day)})
-    data.update({"active": get_label_data(active_count_by_day)})
-    data.update({"hospitals_list": hospitals_list})
-    data.update({"care_center_list": care_center_list})
     data.update({"age_data": age_data})
     data.update({"vaccine_data": vaccine_data})
-
-    return render(request, "index.html", data)
-
-
-def hospital(request):
-    hospital_data = Hospital.objects.all()
-    return render(request, "hospital.html", {"hospital_data": hospital_data})
+    return render(request, "graphs.html", data)
 
 
 def get_label_data(data):
@@ -145,3 +151,7 @@ def get_label_data(data):
         labels.append(day["day"].strftime("%d"))
         datas.append(day["c"])
     return {"labels": ",".join(labels), "data": datas, "sum": sum(datas)}
+
+
+def links(request):
+    return render(request, "links.html")

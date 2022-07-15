@@ -22,6 +22,8 @@ class Hospital(models.Model):
     beds_available = models.IntegerField(default=0)
     hospital_admin = models.ForeignKey(User, on_delete=models.CASCADE)
     is_covid_care_center = models.BooleanField(default=False)
+    oxygen_concentrator_available = models.BooleanField(default=False)
+    ambulance_available = models.BooleanField(default=False)
 
     @property
     def _get_beds_available(self):

@@ -21,5 +21,7 @@ from covid_vis.core import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("hospital/", views.hospital, name="hospital"),
+    path("graphs/", views.graphs, name="graphs"),
+    path("links/", views.links, name="links"),
     re_path("", views.index, name="index"),
 ]
