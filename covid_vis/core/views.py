@@ -28,7 +28,7 @@ class HospitalTable(tables.Table):
             "oxygen_concentrator_available",
             "ambulance_available",
         )
-        template_name = "django_tables2/bootstrap-responsive.html"
+        template_name = "django_tables2/semantic.html"
         orderable = False
 
     def render_id(self, record):
