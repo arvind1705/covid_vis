@@ -18,6 +18,8 @@ from django.urls import path, re_path
 
 from covid_vis.core import views
 
+admin.site.site_header = "Chikkamagaluru Covid Administration"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("hospital/", views.hospital, name="hospital"),

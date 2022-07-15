@@ -1,11 +1,8 @@
-{% extends "base.html" %} {% block content %} 
-{% load render_table from django_tables2 %}
+{% extends "base.html" %} {% block content %}
 
 <div class="container">
   <main role="main" class="container">
     <div class="starter-template">
-      <!-- <h1>Pandemic Visualiser Homepage</h1> -->
-
       <div class="d-flex flex-column">
         <div class="d-flex flex-row justify-content-center">
           <canvas width="350" height="350" id="confirmed_chart"></canvas>
@@ -16,28 +13,6 @@
           <canvas width="350" height="350" id="deceased_chart"></canvas>
         </div>
       </div>
-
-      <!-- <div class="d-flex">
-        <div
-          class="d-flex flex-column justify-content-center align-items-center"
-        >
-          <div style="background-color: aqua;" >List of Hospitals</div>
-          <div style="width: 500px; height: 500px; overflow-y: scroll">
-            {% render_table hospitals_list %}
-          </div>
-        </div>
-
-
-      <div class="d-flex">
-        <div class="d-flex flex-column">
-          <canvas width="300" height="300" id="pie_chart"></canvas>
-        </div>
-
-        <div class="d-flex flex-column">
-          <canvas width="300" height="300" id="vaccine_chart"></canvas>
-        </div>
-      </div> -->
-
       <script>
         const covid_positive_labels = "{{covid_positive.labels|safe}}".split(
           ","
@@ -175,75 +150,6 @@
             scales: { y: { display: true }, x: { display: false } },
           },
         };
-
-        const pie_data = {
-          labels: pie_labels,
-          datasets: [
-            {
-              data: pie_data_set,
-              backgroundColor: [
-                "rgb(255, 99, 132)",
-                "rgb(54, 162, 235)",
-                "rgb(255, 205, 86)",
-                "rgb(75, 192, 192)",
-              ],
-            },
-          ],
-        };
-
-        const vaccine_data = {
-          labels: vaccine_labels,
-          datasets: [
-            {
-              // label: "My First Dataset",
-              data: vaccine_data_set,
-              backgroundColor: [
-                "rgb(255, 99, 132)",
-                "rgb(54, 162, 235)",
-                "rgb(255, 205, 86)",
-                "rgb(75, 192, 192)",
-                "rgb(153, 102, 255)",
-              ],
-            },
-          ],
-        };
-
-        const pie_config = {
-          type: "pie",
-          data: pie_data,
-          options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: "top",
-              },
-              title: {
-                display: true,
-                text: "Age Wise Distribution of Covid Patients",
-              },
-            },
-          },
-        };
-
-        const vaccine_config = {
-          type: "bar",
-          data: vaccine_data,
-          options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: "top",
-                display: false,
-              },
-              title: {
-                display: true,
-                text: "Vaccination Coverage",
-              },
-            },
-          },
-        };
       </script>
 
       <script>
@@ -262,16 +168,6 @@
         const deceased_chart = new Chart(
           document.getElementById("deceased_chart"),
           deceased_config
-        );
-
-        const pie_chart = new Chart(
-          document.getElementById("pie_chart"),
-          pie_config
-        );
-
-        const vaccine_chart = new Chart(
-          document.getElementById("vaccine_chart"),
-          vaccine_config
         );
       </script>
     </div>

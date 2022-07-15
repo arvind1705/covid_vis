@@ -14,6 +14,8 @@ from .models import Hospital, Patient
 
 
 class HospitalTable(tables.Table):
+    """Hospital Table"""
+
     class Meta:
         model = Hospital
         fields = (
@@ -45,6 +47,14 @@ class HospitalTable(tables.Table):
 
 # views.py
 def index(request):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     date_delta = tz.now() - datetime.timedelta(days=10)
     data = {}
 
@@ -91,12 +101,21 @@ def index(request):
 
 
 def hospital(request):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     hospitals_list = HospitalTable(Hospital.objects.all())
     hospitals_list.paginate(page=request.GET.get("page", 1), per_page=10)
     return render(request, "hospital.html", {"hospitals_list": hospitals_list})
 
 
 def graphs(request):
+    """_summary_"""
     today = datetime.date.today()
     data = {}
 
@@ -163,6 +182,14 @@ def graphs(request):
 
 
 def get_label_data(data):
+    """_summary_
+
+    Args:
+        data (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     labels, datas = [], []
     for day in data:
         labels.append(day["day"].strftime("%d"))
@@ -171,9 +198,24 @@ def get_label_data(data):
 
 
 def links(request):
+    """_summary_
+
+    Args:
+        data (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     return render(request, "links.html")
 
 
 def hospital_detail(request, hospital_id):
+    """_summary_
+    Args:
+        data (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     hospital_data = Hospital.objects.get(id=hospital_id)
     return render(request, "hospital_detail.html", {"hospital": hospital_data})
