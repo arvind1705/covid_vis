@@ -3,15 +3,9 @@
 <div class="container">
   <main role="main" class="container">
     <div class="starter-template">
-      <div class="d-flex">
-        <div class="d-flex flex-column">
-          <canvas width="400" height="400" id="pie_chart"></canvas>
-        </div>
-
-        <div class="d-flex flex-column">
-          <canvas width="400" height="400" id="vaccine_chart"></canvas>
-        </div>
-
+      <div class="parent">
+        <canvas width="400" height="400" id="pie_chart"></canvas>
+        <canvas width="400" height="400" id="vaccine_chart"></canvas>
         <script>
           const pie_labels = "{{age_data.labels|safe}}".split(",");
           const pie_data_set = "{{age_data.data|safe}}".split(",");

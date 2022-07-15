@@ -1,0 +1,13 @@
+.parent {
+  display: grid;
+  grid-template-columns: 2.5fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-column-gap: 35px;
+  grid-row-gap: 25px;
+}
+@media screen and (max-width: 600px) {
+  .parent {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}

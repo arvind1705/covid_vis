@@ -3,15 +3,11 @@
 <div class="container">
   <main role="main" class="container">
     <div class="starter-template">
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-row justify-content-center">
-          <canvas width="350" height="350" id="confirmed_chart"></canvas>
-          <canvas width="350" height="350" id="active_chart"></canvas>
-        </div>
-        <div class="d-flex flex-row justify-content-center">
-          <canvas width="350" height="350" id="recovered_chart"></canvas>
-          <canvas width="350" height="350" id="deceased_chart"></canvas>
-        </div>
+      <div class="parent">
+        <canvas width="350" height="350" id="confirmed_chart"></canvas>
+        <canvas width="350" height="350" id="active_chart"></canvas>
+        <canvas width="350" height="350" id="recovered_chart"></canvas>
+        <canvas width="350" height="350" id="deceased_chart"></canvas>
       </div>
       <script>
         const covid_positive_labels = "{{covid_positive.labels|safe}}".split(
@@ -54,9 +50,9 @@
             responsive: false,
             maintainAspectRatio: false,
             plugins: {
-              subtitle: {
+              title: {
                 display: true,
-                text: "{{covid_positive.sum|safe}}",
+                text: "Total: {{covid_positive.sum|safe}}",
               },
               legend: { labels: { font: { size: 14 } } },
             },
@@ -83,9 +79,9 @@
             responsive: false,
             maintainAspectRatio: false,
             plugins: {
-              subtitle: {
+              title: {
                 display: true,
-                text: "{{active.sum|safe}}",
+                text: "Total: {{active.sum|safe}}",
               },
               legend: { labels: { font: { size: 14 } } },
             },
@@ -112,9 +108,9 @@
             responsive: false,
             maintainAspectRatio: false,
             plugins: {
-              subtitle: {
+              title: {
                 display: true,
-                text: "{{recovered.sum|safe}}",
+                text: "Total: {{recovered.sum|safe}}",
               },
               legend: { labels: { font: { size: 14 } } },
             },
@@ -141,18 +137,16 @@
             responsive: false,
             maintainAspectRatio: false,
             plugins: {
-              subtitle: {
+              title: {
                 display: true,
-                text: "{{deceased.sum|safe}}",
+                text: "Total: {{deceased.sum|safe}}",
               },
               legend: { labels: { font: { size: 14 } } },
             },
             scales: { y: { display: true }, x: { display: false } },
           },
         };
-      </script>
 
-      <script>
         const confirmed_chart = new Chart(
           document.getElementById("confirmed_chart"),
           covid_positive_config
