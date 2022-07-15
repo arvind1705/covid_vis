@@ -13,8 +13,6 @@ class Hospital(models.Model):
     zipcode = models.CharField(max_length=100)
     phone = PhoneNumberField()
     website = models.CharField(max_length=100)
-    latitude = models.CharField(max_length=100)
-    longitude = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     total_no_of_beds = models.IntegerField(default=0, verbose_name="Total No. of Beds")
