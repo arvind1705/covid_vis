@@ -1,0 +1,8 @@
+{
+  "python.linting.pylintPath": "pylint_django",
+  "python.linting.pylintArgs": [
+    "--load-plugins",
+    "pylint_django",
+    "--disable=django-not-configured"
+  ]
+}

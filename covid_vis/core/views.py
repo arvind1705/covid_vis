@@ -6,7 +6,9 @@ from dateutil.relativedelta import relativedelta
 from django.db.models import Count
 from django.db.models.functions import TruncDay
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils import timezone as tz
+from django.utils.html import format_html
 
 from .models import Hospital, Patient
 
@@ -14,45 +16,63 @@ from .models import Hospital, Patient
 class HospitalTable(tables.Table):
     class Meta:
         model = Hospital
-        fields = ("name", "total_no_of_beds", "bed_occupied", "beds_available")
+        fields = (
+            "id",
+            "name",
+            "total_no_of_beds",
+            "bed_occupied",
+            "beds_available",
+            "covid_care_center",
+            "oxygen_concentrator_available",
+            "ambulance_available",
+        )
         template_name = "django_tables2/semantic.html"
+        orderable = False
 
-
-class CareCenterTable(tables.Table):
-    class Meta:
-        model = Hospital
-        fields = ("name", "phone")
-        template_name = "django_tables2/semantic.html"
+    def render_id(self, record):
+        """
+        This function will render over the default id column.
+        By adding <a href> HTML formatting around the id number a link will be added,
+        thus acting the same as linkify. The record stands for the entire record
+        for the row from the table data.
+        """
+        return format_html(
+            '<a href="{}">{}</a>',
+            reverse("hospital_detail", kwargs={"hospital_id": record.id}),
+            record.id,
+        )
 
 
 # views.py
 def index(request):
-    d = tz.now() - datetime.timedelta(days=10)
+    date_delta = tz.now() - datetime.timedelta(days=10)
     data = {}
 
     covid_positive_count_by_day = (
-        Patient.objects.filter(covid_positive=True, updated_at__lt=d)
+        Patient.objects.filter(covid_positive=True, updated_at__lt=date_delta)
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("covid_positive"))
         .values("day", "c")
     )
     deceased_count_by_day = (
-        Patient.objects.filter(deceased=True, updated_at__lt=d)
+        Patient.objects.filter(deceased=True, updated_at__lt=date_delta)
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("deceased"))
         .values("day", "c")
     )
     recovered_count_by_day = (
-        Patient.objects.filter(recovered=True, updated_at__lt=d)
+        Patient.objects.filter(recovered=True, updated_at__lt=date_delta)
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("recovered"))
         .values("day", "c")
     )
     active_count_by_day = (
-        Patient.objects.filter(recovered=False, covid_positive=True, updated_at__lt=d)
+        Patient.objects.filter(
+            recovered=False, covid_positive=True, updated_at__lt=date_delta
+        )
         .annotate(day=TruncDay("created_at"))
         .values("day")
         .annotate(c=Count("recovered"))
@@ -60,23 +80,19 @@ def index(request):
     )
 
     hospitals_list = HospitalTable(Hospital.objects.all())
-    care_center_list = CareCenterTable(
-        Hospital.objects.filter(is_covid_care_center=True)
-    )
 
     data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
     data.update({"deceased": get_label_data(deceased_count_by_day)})
     data.update({"recovered": get_label_data(recovered_count_by_day)})
     data.update({"active": get_label_data(active_count_by_day)})
     data.update({"hospitals_list": hospitals_list})
-    data.update({"care_center_list": care_center_list})
 
     return render(request, "index.html", data)
 
 
 def hospital(request):
-    hospital_data = Hospital.objects.all()
-    return render(request, "hospital.html", {"hospital_data": hospital_data})
+    hospitals_list = HospitalTable(Hospital.objects.all())
+    return render(request, "hospital.html", {"hospitals_list": hospitals_list})
 
 
 def graphs(request):
@@ -155,3 +171,8 @@ def get_label_data(data):
 
 def links(request):
     return render(request, "links.html")
+
+
+def hospital_detail(request, hospital_id):
+    hospital_data = Hospital.objects.get(id=hospital_id)
+    return render(request, "hospital_detail.html", {"hospital": hospital_data})

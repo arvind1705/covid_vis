@@ -1,20 +1,9 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} 
+{% load render_table from django_tables2 %}
 
-<h2>Hospital Data</h2>
-
-<div class="d-flex flex-column">
-  {% for i in hospital_data %}
-  <div>
-    Hospital Name: {{i.name}} <br />
-    Address: {{i.address}} <br />
-    City: {{i.city}} <br />
-    Zipcode: {{i.zipcode}} <br />
-    Phone: {{i.phone}} <br />
-  </div>
-  <br />
-  <br />
-
-  {% endfor %}
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <div>List of Hospitals</div>
+  <div style="overflow-y: scroll">{% render_table hospitals_list %}</div>
 </div>
 
 {% endblock content %}

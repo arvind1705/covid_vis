@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -18,11 +17,22 @@ class Hospital(models.Model):
     total_no_of_beds = models.IntegerField(default=0, verbose_name="Total No. of Beds")
     no_icu_beds = models.IntegerField(default=0, verbose_name="No. of ICU Beds")
     bed_occupied = models.IntegerField(default=0, verbose_name="No. of Beds Occupied")
-    beds_available = models.IntegerField(default=0, verbose_name="No. of Beds Available")
+    beds_available = models.IntegerField(
+        default=0, verbose_name="No. of Beds Available"
+    )
     hospital_admin = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_covid_care_center = models.BooleanField(default=False, verbose_name="Covid Care Center",)
-    oxygen_concentrator_available = models.BooleanField(default=False, verbose_name="Oxygen concentrator",)
-    ambulance_available = models.BooleanField(default=False, verbose_name="Ambulance",)
+    is_covid_care_center = models.BooleanField(
+        default=False,
+        verbose_name="Covid Care Center",
+    )
+    oxygen_concentrator_available = models.BooleanField(
+        default=False,
+        verbose_name="Oxygen concentrator",
+    )
+    ambulance_available = models.BooleanField(
+        default=False,
+        verbose_name="Ambulance",
+    )
 
     @property
     def _get_beds_available(self):
