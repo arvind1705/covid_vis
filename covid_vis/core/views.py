@@ -20,13 +20,13 @@ class HospitalTable(tables.Table):
             "id",
             "name",
             "total_no_of_beds",
-            "bed_occupied",
+            "no_icu_beds",
             "beds_available",
-            "covid_care_center",
+            "is_covid_care_center",
             "oxygen_concentrator_available",
             "ambulance_available",
         )
-        template_name = "django_tables2/semantic.html"
+        template_name = "django_tables2/bootstrap4.html"
         orderable = False
 
     def render_id(self, record):
@@ -92,6 +92,7 @@ def index(request):
 
 def hospital(request):
     hospitals_list = HospitalTable(Hospital.objects.all())
+    hospitals_list.paginate(page=request.GET.get("page", 1), per_page=25)
     return render(request, "hospital.html", {"hospitals_list": hospitals_list})
 
 
