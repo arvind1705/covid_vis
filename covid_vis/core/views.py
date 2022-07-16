@@ -17,9 +17,10 @@ class HospitalTable(tables.Table):
     """Hospital Table"""
 
     class Meta:
+        """_summary_attrs = ['name', 'address', 'city', 'state', 'zip_code', 'phone_number', 'email']
+        """
         model = Hospital
         fields = (
-            "id",
             "name",
             "total_no_of_beds",
             "no_icu_beds",
@@ -31,7 +32,7 @@ class HospitalTable(tables.Table):
         template_name = "django_tables2/bootstrap4.html"
         orderable = False
 
-    def render_id(self, record):
+    def render_name(self, record):
         """
         This function will render over the default id column.
         By adding <a href> HTML formatting around the id number a link will be added,
@@ -41,7 +42,7 @@ class HospitalTable(tables.Table):
         return format_html(
             '<a href="{}">{}</a>',
             reverse("hospital_detail", kwargs={"hospital_id": record.id}),
-            record.id,
+            record.name,
         )
 
 
