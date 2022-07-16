@@ -1,4 +1,7 @@
 # Create your views here.
+"""
+views.py
+"""
 import datetime
 
 import django_tables2 as tables
@@ -7,7 +10,6 @@ from django.db.models import Count
 from django.db.models.functions import TruncDay
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils import timezone as tz
 from django.utils.html import format_html
 
 from .models import Hospital, Patient
@@ -17,8 +19,11 @@ class HospitalTable(tables.Table):
     """Hospital Table"""
 
     class Meta:
-        """_summary_attrs = ['name', 'address', 'city', 'state', 'zip_code', 'phone_number', 'email']
         """
+        _summary_attrs = ['name', 'address', 'city', 'state',
+        'zip_code', 'phone_number', 'email']
+        """
+
         model = Hospital
         fields = (
             "name",
@@ -56,8 +61,6 @@ def index(request):
     Returns:
         _type_: _description_
     """
-    # trunk-ignore(flake8/F841)
-    date_delta = tz.now() - datetime.timedelta(days=1)
     data = {}
 
     covid_positive_count_by_day = (
@@ -67,7 +70,6 @@ def index(request):
         .annotate(c=Count("covid_positive"))
         .values("day", "c")
     )
-    print(covid_positive_count_by_day)
     deceased_count_by_day = (
         Patient.objects.filter(deceased=True)
         .annotate(day=TruncDay("updated_at"))

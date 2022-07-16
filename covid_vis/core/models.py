@@ -1,10 +1,15 @@
-from django.contrib.auth.models import User
+"""
+models.py
+"""
+from django.contrib.auth import get_user_model
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
-
+User = get_user_model()
 # Create your models here.
 class Hospital(models.Model):
+    """Hospital Model"""
+
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
@@ -48,6 +53,8 @@ class Hospital(models.Model):
 
 
 class Patient(models.Model):
+    """Patient Model"""
+
     name = models.CharField(max_length=100)
     phone = PhoneNumberField()
     email = models.EmailField()
