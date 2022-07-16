@@ -195,7 +195,7 @@ def get_label_data(data):
         labels.append(day["day"].strftime("%d %b"))
         datas.append(str(day["c"]))
         count += day["c"]
-    sorted(labels, key=lambda x: datetime.datetime.strptime(x, '%d %b'))
+    # sorted(labels, key=lambda x: datetime.datetime.strptime(x, '%d %b'))
     return {"labels": ",".join(labels), "data": ",".join(datas), "sum": count}
 
 
