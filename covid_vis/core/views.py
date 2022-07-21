@@ -214,6 +214,17 @@ def links(request):
     return render(request, "links.html")
 
 
+def helpline(request):
+    """_summary_
+
+    Args:
+        data (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    return render(request, "helpline.html")
+
 def hospital_detail(request, hospital_id):
     """_summary_
     Args:
