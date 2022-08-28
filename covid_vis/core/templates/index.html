@@ -4,10 +4,41 @@
   <main role="main" class="container">
     <div class="starter-template">
       <div class="parent">
-        <canvas width="350" height="350" id="confirmed_chart"></canvas>
-        <canvas width="350" height="350" id="active_chart"></canvas>
-        <canvas width="350" height="350" id="recovered_chart"></canvas>
-        <canvas width="350" height="350" id="deceased_chart"></canvas>
+        <div >
+          <div class = "d-flex flex-column justify-content-center align-items-center" style="width: 350px;height: 70px; background: linear-gradient(to bottom, #f5ce67 0%, #f8cd67 4%, #f6cc66 7%, #f7cb6c 13%, #f5c66c 21%, #f8c76b 23%, #f7c570 27%, #f7c36f 33%, #f9c174 39%, #f8bf72 40%, #f9ba73 47%, #f9ba77 52%, #fdb877 56%, #fab677 57%, #f9b479 60%, #fab17c 67%, #fcb17a 69%, #fbaf7e 74%, #fcab7c 77%, #fcab7e 84%, #fdaa82 85%, #fca683 100%);; border-radius: 10px;">
+              <!-- <img src="https://covid19.karnataka.gov.in/frontend/opt1/images/covid/icon-active.png" alt="Active Status"> -->
+              <span>Confirmed</span>
+              <strong>{{covid_positive.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="confirmed_chart"></canvas>
+        </div>
+
+        <div>
+          <div class = "d-flex flex-column justify-content-center align-items-center" style="width: 350px;height: 70px; background: linear-gradient(to bottom, #a5c9fd 0%, #a5c9fd 6%, #a7cbff 8%, #a5c9fd 11%, #a7cbff 11%, #aacffc 28%, #b0d5ff 44%, #b0d6fb 48%, #b5dbff 62%, #b4dbfc 62%, #b8dffe 75%, #bae2fb 79%, #bce4fe 91%, #bde6fa 96%, #bee7fd 100%);; border-radius: 10px;">
+            <!-- <img src="https://covid19.karnataka.gov.in/frontend/opt1/images/covid/icon-active.png" alt="Active Status"> -->
+            <span>Active</span>
+            <strong>{{active.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="active_chart"></canvas>
+        </div>
+
+        <div>
+          <div class = "d-flex flex-column justify-content-center align-items-center" style="width: 350px;height: 70px; background: linear-gradient(to bottom, #9ae69c 0%, #9ce999 5%, #9cea9e 6%, #9cea9e 6%, #a0e99a 10%, #a3eb95 24%, #adee92 36%, #adee90 40%, #b3ef8f 45%, #b0f08f 46%, #b4f18a 50%, #b7f18d 51%, #b6f08a 53%, #baf18b 58%, #c4f780 77%, #c9f681 86%, #ccfa7e 90%, #cbf77c 94%, #cff87e 96%, #cff87e 100%); border-radius: 10px;">
+            <!-- <img src="https://covid19.karnataka.gov.in/frontend/opt1/images/covid/icon-active.png" alt="Active Status"> -->
+            <span>Recovered</span>
+            <strong>{{recovered.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="recovered_chart"></canvas>
+        </div>
+
+        <div>
+          <div class = "d-flex flex-column justify-content-center align-items-center" style="width: 350px;height: 70px; background: linear-gradient(to bottom, #ff8582 0%, #fe8685 16%, #ff908e 44%, #fe908f 53%, #ff9692 62%, #ff9597 67%, #ff9a98 84%, #ff9b9b 85%, #fe9c9d 91%, #ff9e98 96%, #ff9d9c 96%, #ff9e9d 100%); border-radius: 10px;">
+            <!-- <img src="https://covid19.karnataka.gov.in/frontend/opt1/images/covid/icon-active.png" alt="Active Status"> -->
+            <span>Deceased</span>
+            <strong>{{deceased.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="deceased_chart"></canvas>
+        </div>
       </div>
       <script>
         const date_sorter = function (a, b) {
@@ -40,9 +71,9 @@
           labels: covid_positive_labels,
           datasets: [
             {
-              label: "CONFIRMED",
-              backgroundColor: "red",
-              borderColor: "red",
+              // label: "CONFIRMED",
+              backgroundColor: "orange",
+              borderColor: "orange",
               data: covid_positive_data_set,
               spanGaps: true,
             },
@@ -57,12 +88,12 @@
             maintainAspectRatio: false,
             plugins: {
               title: {
-                display: true,
+                // display: true,
                 text: "Total: {{covid_positive.sum|safe}}",
               },
-              legend: { labels: { font: { size: 14 } } },
+              legend: { labels: { font: { size: 14 } }, display: false },
             },
-            scales: { y: { display: true }, x: { display: true } },
+            scales: { y: { display: true, ticks: { color: 'black', fontSize: 20} }, x: { display: true } },
           },
         };
 
@@ -71,8 +102,8 @@
           datasets: [
             {
               label: "ACTIVE",
-              backgroundColor: "orange",
-              borderColor: "orange",
+              backgroundColor: "blue",
+              borderColor: "blue",
               data: active_data_set,
               spanGaps: true,
             },
@@ -87,10 +118,10 @@
             maintainAspectRatio: false,
             plugins: {
               title: {
-                display: true,
+                // display: true,
                 text: "Total: {{active.sum|safe}}",
               },
-              legend: { labels: { font: { size: 14 } } },
+              legend: { labels: { font: { size: 14 } },display: false },
             },
             scales: { y: { display: true }, x: { display: true } },
           },
@@ -117,10 +148,10 @@
             maintainAspectRatio: false,
             plugins: {
               title: {
-                display: true,
+                // display: true,
                 text: "Total: {{recovered.sum|safe}}",
               },
-              legend: { labels: { font: { size: 14 } } },
+              legend: { labels: { font: { size: 14 } },display: false },
             },
             scales: { y: { display: true }, x: { display: true } },
           },
@@ -131,8 +162,8 @@
           datasets: [
             {
               label: "DECEASED",
-              backgroundColor: "grey",
-              borderColor: "grey",
+              backgroundColor: "red",
+              borderColor: "red",
               data: deceased_data_set,
               spanGaps: true,
             },
@@ -147,10 +178,10 @@
             maintainAspectRatio: false,
             plugins: {
               title: {
-                display: true,
+                // display: true,
                 text: "Total: {{deceased.sum|safe}}",
               },
-              legend: { labels: { font: { size: 14 } } },
+              legend: { labels: { font: { size: 14 } },display: false },
             },
             scales: { y: { display: true }, x: { display: true } },
           },
