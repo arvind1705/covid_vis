@@ -234,4 +234,5 @@ def hospital_detail(request, hospital_id):
         _type_: _description_
     """
     hospital_data = Hospital.objects.get(id=hospital_id)
-    return render(request, "hospital_detail.html", {"hospital": hospital_data})
+    hospitals_list = HospitalTable(Hospital.objects.filter(id=hospital_id))
+    return render(request, "hospital_detail.html", {"hospital": hospital_data, "hospitals_list": hospitals_list})
