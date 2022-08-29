@@ -3,16 +3,16 @@
 {% bootstrap_css %}
 
 <div class="d-flex flex-column justify-content-center align-items-center">
-  <strong>Hospitals Details</strong>
+  <h3>Hospitals Details</h3>
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-start">
 
   <div>
     {% if filter %}
-    <form action="" method="get" class="form d-flex flex-row ">
+    <form action="" method="get" class=" d-flex flex-row ">
       {% bootstrap_form filter.form layout='inline' %}
-      <div class="mt-auto bg-primary">{% bootstrap_button 'Search' %}</div>
+      <div class="">{% bootstrap_button 'Search' %}</div>
     </form>
     {% endif %}
   </div>
