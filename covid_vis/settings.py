@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "covid_vis.core",
     "django_tables2",
     "django_filters",
+    "bootstrap3",
     "bootstrap4",
 ]
 

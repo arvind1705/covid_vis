@@ -16,7 +16,7 @@
 
   <img src="{% static 'hospital-building.jpg' %}" alt="Italian Trulli" style="width:500px;height:500px;" >
 
-  <div class="d-flex flex-column justify-content-center align-items-center">
+  <div class="d-flex flex-column justify-content-center align-items-start">
     Hospital Name: {{hospital.name}} <br />
     Address: {{hospital.address}} <br />
     City: {{hospital.city}} <br />
@@ -26,11 +26,11 @@
 
 </div>
 
-<div class="d-flex flex-column justify-content-center align-items-center">
+<div class="d-flex flex-column justify-content-center align-items-start">
   <div style="overflow-y: scroll">{% render_table hospitals_list %}</div>
 </div>
 
-<div class="d-flex flex-column justify-content-center align-items-center">
+<div class="d-flex flex-column justify-content-center align-items-start">
 <table class="tg">
   <thead>
     <tr>
