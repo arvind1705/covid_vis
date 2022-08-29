@@ -1,8 +1,9 @@
 {% extends "base.html" %} {% block content %} {% load render_table from django_tables2 %} 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
 
 <div class="d-flex flex-column justify-content-center align-items-center">
-  <strong>Hospitals</strong>
+  <strong>Hospitals Details</strong>
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-start">
@@ -11,13 +12,13 @@
     {% if filter %}
     <form action="" method="get" class="form d-flex flex-row ">
       {% bootstrap_form filter.form layout='inline' %}
-      <div class="mt-auto">{% bootstrap_button 'Search' %}</div>
+      <div class="mt-auto bg-primary">{% bootstrap_button 'Search' %}</div>
     </form>
     {% endif %}
   </div>
 
   <div style="overflow-y: scroll">
-    {% render_table table 'django_tables2/bootstrap.html' %}
+    {% render_table table 'django_tables2/bootstrap4.html' %}
   </div>
 </div>
 
