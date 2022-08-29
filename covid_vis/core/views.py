@@ -196,8 +196,43 @@ def graphs(request):
         "data": ",".join(vaccine_data.values()),
     }
 
+    covid_positive_count_by_day = (
+        Patient.objects.filter(covid_positive=True)
+        .annotate(day=TruncDay("updated_at"))
+        .values("day")
+        .annotate(c=Count("covid_positive"))
+        .values("day", "c")
+    )
+    deceased_count_by_day = (
+        Patient.objects.filter(deceased=True)
+        .annotate(day=TruncDay("updated_at"))
+        .values("day")
+        .annotate(c=Count("deceased"))
+        .values("day", "c")
+    )
+    recovered_count_by_day = (
+        Patient.objects.filter(recovered=True)
+        .annotate(day=TruncDay("updated_at"))
+        .values("day")
+        .annotate(c=Count("recovered"))
+        .values("day", "c")
+    )
+    active_count_by_day = (
+        Patient.objects.filter(recovered=False, covid_positive=True)
+        .annotate(day=TruncDay("updated_at"))
+        .values("day")
+        .annotate(c=Count("recovered"))
+        .values("day", "c")
+    )
+
     data.update({"age_data": age_data})
     data.update({"vaccine_data": vaccine_data})
+
+    data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
+    data.update({"deceased": get_label_data(deceased_count_by_day)})
+    data.update({"recovered": get_label_data(recovered_count_by_day)})
+    data.update({"active": get_label_data(active_count_by_day)})
+
     return render(request, "graphs.html", data)
 
 
