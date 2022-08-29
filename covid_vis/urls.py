@@ -22,7 +22,7 @@ admin.site.site_header = "Chikkamagaluru Covid Administration"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("hospital/", views.hospital, name="hospital"),
+    path("hospital/", views.FilteredHospitalListView.as_view(), name="hospital"),
     path("<int:hospital_id>", views.hospital_detail, name="hospital_detail"),
     path("graphs/", views.graphs, name="graphs"),
     path("links/", views.links, name="links"),

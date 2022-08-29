@@ -11,6 +11,9 @@ from django.db.models.functions import TruncDay
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html
+from django_filters import FilterSet
+from django_filters.views import FilterView
+from django_tables2.views import SingleTableMixin
 
 from .models import Hospital, Patient
 
@@ -49,6 +52,20 @@ class HospitalTable(tables.Table):
             reverse("hospital_detail", kwargs={"hospital_id": record.id}),
             record.name,
         )
+
+
+class HospitalFilter(FilterSet):
+    class Meta:
+        model = Hospital
+        fields = {"name": ["contains"]}
+
+
+class FilteredHospitalListView(SingleTableMixin, FilterView):
+    table_class = HospitalTable
+    model = Hospital
+    template_name = "hospital.html"
+
+    filterset_class = HospitalFilter
 
 
 # views.py
@@ -225,6 +242,7 @@ def helpline(request):
     """
     return render(request, "helpline.html")
 
+
 def hospital_detail(request, hospital_id):
     """_summary_
     Args:
@@ -235,4 +253,8 @@ def hospital_detail(request, hospital_id):
     """
     hospital_data = Hospital.objects.get(id=hospital_id)
     hospitals_list = HospitalTable(Hospital.objects.filter(id=hospital_id))
-    return render(request, "hospital_detail.html", {"hospital": hospital_data, "hospitals_list": hospitals_list})
+    return render(
+        request,
+        "hospital_detail.html",
+        {"hospital": hospital_data, "hospitals_list": hospitals_list},
+    )

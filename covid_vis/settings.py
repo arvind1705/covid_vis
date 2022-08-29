@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "covid_vis.core",
     "django_tables2",
+    "django_filters",
+    "bootstrap4",
 ]
 
 MIDDLEWARE = [
