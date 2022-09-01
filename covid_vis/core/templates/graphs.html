@@ -4,8 +4,40 @@
   <main role="main" class="container">
     <div class="starter-template">
       <div class="parent">
-        <canvas width="400" height="400" id="pie_chart"></canvas>
-        <canvas width="400" height="400" id="vaccine_chart"></canvas>
+        <div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="
+              width: 350px;
+              height: 70px;
+              background: linear-gradient(to right, #86e3e7, #7fe2e6, #78e1e6, #71e0e5, #69dfe5, #62dfe5, #5adee5, #52dee5, #48dee5, #3cdee6, #2ddee6, #15dee7);
+              border-radius: 10px;
+            "
+          >
+            <span>Age Wise Distribution of Covid Patients</span>
+            <!-- <strong>{{covid_positive.sum|safe}}</strong> -->
+          </div>
+          <canvas width="350" height="350" id="pie_chart"></canvas>
+        </div>
+        <div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="
+              width: 350px;
+              height: 70px;
+              background: linear-gradient(to right, #86e3e7, #7fe2e6, #78e1e6, #71e0e5, #69dfe5, #62dfe5, #5adee5, #52dee5, #48dee5, #3cdee6, #2ddee6, #15dee7);
+              border-radius: 10px;
+            "
+          >
+            <!-- <img src="https://covid19.karnataka.gov.in/frontend/opt1/images/covid/icon-active.png" alt="Active Status"> -->
+            <span>Vaccination Coverage</span>
+            <!-- <strong>{{covid_positive.sum|safe}}</strong> -->
+          </div>
+          <canvas width="350" height="350" id="vaccine_chart"></canvas>
+        </div>
+
+        <!-- <canvas width="400" height="400" id="pie_chart"></canvas> -->
+        <!-- <canvas width="400" height="400" id="vaccine_chart"></canvas> -->
         <div>
           <div
             class="d-flex flex-column justify-content-center align-items-center"
@@ -201,7 +233,7 @@
                   position: "top",
                 },
                 title: {
-                  display: true,
+                  // display: true,
                   text: "Age Wise Distribution of Covid Patients",
                 },
               },
@@ -220,7 +252,7 @@
                   display: false,
                 },
                 title: {
-                  display: true,
+                  // display: true,
                   text: "Vaccination Coverage",
                 },
               },
