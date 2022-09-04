@@ -1,56 +1,75 @@
-{% extends "base.html" %} {% block content %}
-
-{% load render_table from django_tables2 %}
+{% extends "base.html" %} {% block content %} {% load render_table from
+django_tables2 %}
 
 <style type="text/css">
-  .tg  {border-collapse:collapse;border-spacing:0;}
-  .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-    overflow:hidden;padding:10px 5px;word-break:normal;}
-  .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-    font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-  .tg .tg-0lax{text-align:left;vertical-align:top}
-  </style>
+  .tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  .tg td {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+  }
+  .tg th {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+  }
+  .tg .tg-0lax {
+    text-align: left;
+    vertical-align: top;
+  }
+</style>
 
-<div class="d-flex flex-row">
+<div class="d-flex flex-column justify-content-center align-items-center">
   <!-- {% load static %} -->
 
-  <img src="{% static 'hospital-building.jpg' %}" alt="Italian Trulli" style="width:500px;height:500px;" >
+  <img
+    src="{% static 'hospital-building.jpg' %}"
+    alt="Italian Trulli"
+    style="width: 350px; height: 350px"
+  />
 
   <div class="d-flex flex-column justify-content-center align-items-start">
-    Hospital Name: {{hospital.name}} <br />
-    Address: {{hospital.address}} <br />
-    City: {{hospital.city}} <br />
-    Zipcode: {{hospital.zipcode}} <br />
-    Phone: {{hospital.phone}} <br />
+    <strong>Name: {{hospital.name}} </strong>
+    <strong>Address: {{hospital.address}} </strong>
+    <strong>City: {{hospital.city}} </strong>
+    <strong>Zipcode: {{hospital.zipcode}} </strong>
+    <strong>Phone: {{hospital.phone}} </strong>
   </div>
-
 </div>
 
-<div class="d-flex flex-column justify-content-center align-items-start">
+<div class="d-flex flex-column justify-content-center align-items-center">
   <div style="overflow-y: scroll">{% render_table hospitals_list %}</div>
 </div>
 
-<div class="d-flex flex-column justify-content-center align-items-start">
-<table class="tg">
-  <thead>
-    <tr>
-      <th class="tg-0lax">Ambulance Driver Name</th>
-      <th class="tg-0lax">Phone Number</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-0lax">Aravind</td>
-      <td class="tg-0lax">080-23236401</td>
-    </tr>
-    <tr>
-      <td class="tg-0lax"></td>
-      <td class="tg-0lax"></td>
-    </tr>
-  </tbody>
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-0lax">Ambulance Driver Name</th>
+        <th class="tg-0lax">Phone Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-0lax">Aravind</td>
+        <td class="tg-0lax">080-23236401</td>
+      </tr>
+    </tbody>
   </table>
 </div>
-
-
 
 {% endblock content %}
