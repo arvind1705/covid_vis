@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, re_path
 
 from covid_vis.core import views
@@ -21,6 +22,11 @@ from covid_vis.core import views
 admin.site.site_header = "Chikkamagaluru Covid Administration"
 
 urlpatterns = [
+    path(
+        "admin/login/",
+        auth_views.LoginView.as_view(template_name="login.html"),
+        name="login",
+    ),
     path("admin/", admin.site.urls),
     path("hospital/", views.FilteredHospitalListView.as_view(), name="hospital"),
     path("<int:hospital_id>", views.hospital_detail, name="hospital_detail"),
