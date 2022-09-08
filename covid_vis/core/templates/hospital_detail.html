@@ -38,9 +38,9 @@
   <!-- {% load static %} -->
 
   <img
-    src="{% static 'hospital-building.jpg' %}"
+    src="{{hospital.image_link}}"
     alt="Italian Trulli"
-    style="width: 350px; height: 350px"
+    style="width: 400px; height: 400px"
   />
 
   <div class="d-flex flex-column justify-content-center align-items-start">
@@ -66,8 +66,8 @@
     </thead>
     <tbody>
       <tr>
-        <td class="tg-0lax">Aravind</td>
-        <td class="tg-0lax">080-23236401</td>
+        <td class="tg-0lax">{{hospital.ambulance_driver_name}}</td>
+        <td class="tg-0lax">{{hospital.ambulance_driver_phone}}</td>
       </tr>
     </tbody>
   </table>

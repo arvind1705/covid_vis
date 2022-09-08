@@ -38,6 +38,9 @@ class Hospital(models.Model):
         default=False,
         verbose_name="Ambulance",
     )
+    image_link = models.CharField(max_length=500)
+    ambulance_driver_name = models.CharField(max_length=100)
+    ambulance_driver_phone = PhoneNumberField()
 
     @property
     def _get_beds_available(self):
