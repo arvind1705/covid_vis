@@ -1,8 +1,316 @@
 {% extends "base.html" %} {% block content %}
-
 <div class="container">
-  <!--  Add any html code you want to here. -->
+  <main role="main" class="container">
+    <div class="starter-template">
+      <div class="parent">
+        <div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="
+              width: 350px;
+              height: 70px;
+              background: linear-gradient(
+                to bottom,
+                #f5ce67 0%,
+                #f8cd67 4%,
+                #f6cc66 7%,
+                #f7cb6c 13%,
+                #f5c66c 21%,
+                #f8c76b 23%,
+                #f7c570 27%,
+                #f7c36f 33%,
+                #f9c174 39%,
+                #f8bf72 40%,
+                #f9ba73 47%,
+                #f9ba77 52%,
+                #fdb877 56%,
+                #fab677 57%,
+                #f9b479 60%,
+                #fab17c 67%,
+                #fcb17a 69%,
+                #fbaf7e 74%,
+                #fcab7c 77%,
+                #fcab7e 84%,
+                #fdaa82 85%,
+                #fca683 100%
+              );
+              border-radius: 10px;
+            "
+          >
+            <span>Confirmed</span>
+            <strong>{{covid_positive.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="confirmed_chart"></canvas>
+        </div>
+
+        <div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="
+              width: 350px;
+              height: 70px;
+              background: linear-gradient(
+                to bottom,
+                #a5c9fd 0%,
+                #a5c9fd 6%,
+                #a7cbff 8%,
+                #a5c9fd 11%,
+                #a7cbff 11%,
+                #aacffc 28%,
+                #b0d5ff 44%,
+                #b0d6fb 48%,
+                #b5dbff 62%,
+                #b4dbfc 62%,
+                #b8dffe 75%,
+                #bae2fb 79%,
+                #bce4fe 91%,
+                #bde6fa 96%,
+                #bee7fd 100%
+              );
+              border-radius: 10px;
+            "
+          >
+            <span>Active</span>
+            <strong>{{active.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="active_chart"></canvas>
+        </div>
+
+        <div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="
+              width: 350px;
+              height: 70px;
+              background: linear-gradient(
+                to bottom,
+                #9ae69c 0%,
+                #9ce999 5%,
+                #9cea9e 6%,
+                #9cea9e 6%,
+                #a0e99a 10%,
+                #a3eb95 24%,
+                #adee92 36%,
+                #adee90 40%,
+                #b3ef8f 45%,
+                #b0f08f 46%,
+                #b4f18a 50%,
+                #b7f18d 51%,
+                #b6f08a 53%,
+                #baf18b 58%,
+                #c4f780 77%,
+                #c9f681 86%,
+                #ccfa7e 90%,
+                #cbf77c 94%,
+                #cff87e 96%,
+                #cff87e 100%
+              );
+              border-radius: 10px;
+            "
+          >
+            <span>Recovered</span>
+            <strong>{{recovered.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="recovered_chart"></canvas>
+        </div>
+
+        <div>
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+            style="
+              width: 350px;
+              height: 70px;
+              background: linear-gradient(
+                to bottom,
+                #ff8582 0%,
+                #fe8685 16%,
+                #ff908e 44%,
+                #fe908f 53%,
+                #ff9692 62%,
+                #ff9597 67%,
+                #ff9a98 84%,
+                #ff9b9b 85%,
+                #fe9c9d 91%,
+                #ff9e98 96%,
+                #ff9d9c 96%,
+                #ff9e9d 100%
+              );
+              border-radius: 10px;
+            "
+          >
+            <span>Deceased</span>
+            <strong>{{deceased.sum|safe}}</strong>
+          </div>
+          <canvas width="350" height="350" id="deceased_chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
+
+<script>
+  const date_sorter = function (a, b) {
+    const date1 = new Date(a);
+    const date2 = new Date(b);
+    return date1 - date2;
+  };
+
+  const covid_positive_labels = "{{covid_positive.labels|safe}}".split(",");
+  covid_positive_labels.sort(date_sorter);
+  const covid_positive_data_set = "{{covid_positive.data|safe}}".split(",");
+
+  const deceased_labels = "{{deceased.labels|safe}}".split(",");
+  deceased_labels.sort(date_sorter);
+  const deceased_data_set = "{{deceased.data|safe}}".split(",");
+
+  const recovered_labels = "{{recovered.labels|safe}}".split(",");
+  recovered_labels.sort(date_sorter);
+  const recovered_data_set = "{{recovered.data|safe}}".split(",");
+
+  const active_labels = "{{active.labels|safe}}".split(",");
+  active_labels.sort(date_sorter);
+  const active_data_set = "{{active.data|safe}}".split(",");
+
+  const covid_positive_data = {
+    labels: covid_positive_labels,
+    datasets: [
+      {
+        // label: "CONFIRMED",
+        backgroundColor: "orange",
+        borderColor: "orange",
+        data: covid_positive_data_set,
+        spanGaps: true,
+      },
+    ],
+  };
+
+  const covid_positive_config = {
+    type: "line",
+    data: covid_positive_data,
+    options: {
+      responsive: false,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          // display: true,
+          text: "Total: {{covid_positive.sum|safe}}",
+        },
+        legend: { labels: { font: { size: 14 } }, display: false },
+      },
+      scales: {
+        y: { display: true, ticks: { color: "black", fontSize: 20 } },
+        x: { display: true },
+      },
+    },
+  };
+
+  const active_data = {
+    labels: active_labels,
+    datasets: [
+      {
+        label: "ACTIVE",
+        backgroundColor: "blue",
+        borderColor: "blue",
+        data: active_data_set,
+        spanGaps: true,
+      },
+    ],
+  };
+
+  const active_config = {
+    type: "line",
+    data: active_data,
+    options: {
+      responsive: false,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          // display: true,
+          text: "Total: {{active.sum|safe}}",
+        },
+        legend: { labels: { font: { size: 14 } }, display: false },
+      },
+      scales: { y: { display: true }, x: { display: true } },
+    },
+  };
+
+  const recovered_data = {
+    labels: recovered_labels,
+    datasets: [
+      {
+        label: "RECOVERED",
+        backgroundColor: "green",
+        borderColor: "green",
+        data: recovered_data_set,
+        spanGaps: true,
+      },
+    ],
+  };
+
+  const recovered_config = {
+    type: "line",
+    data: recovered_data,
+    options: {
+      responsive: false,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          // display: true,
+          text: "Total: {{recovered.sum|safe}}",
+        },
+        legend: { labels: { font: { size: 14 } }, display: false },
+      },
+      scales: { y: { display: true }, x: { display: true } },
+    },
+  };
+
+  const deceased_data = {
+    labels: deceased_labels,
+    datasets: [
+      {
+        label: "DECEASED",
+        backgroundColor: "red",
+        borderColor: "red",
+        data: deceased_data_set,
+        spanGaps: true,
+      },
+    ],
+  };
+
+  const deceased_config = {
+    type: "line",
+    data: deceased_data,
+    options: {
+      responsive: false,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          // display: true,
+          text: "Total: {{deceased.sum|safe}}",
+        },
+        legend: { labels: { font: { size: 14 } }, display: false },
+      },
+      scales: { y: { display: true }, x: { display: true } },
+    },
+  };
+
+  const confirmed_chart = new Chart(
+    document.getElementById("confirmed_chart"),
+    covid_positive_config
+  );
+  const active_chart = new Chart(
+    document.getElementById("active_chart"),
+    active_config
+  );
+  const recovered_chart = new Chart(
+    document.getElementById("recovered_chart"),
+    recovered_config
+  );
+  const deceased_chart = new Chart(
+    document.getElementById("deceased_chart"),
+    deceased_config
+  );
+</script>
 
 <footer class="bg-light text-center text-lg-start">
   <div class="container p-4">
@@ -26,4 +334,5 @@
     >
   </div>
 </footer>
+
 {% endblock content %}
