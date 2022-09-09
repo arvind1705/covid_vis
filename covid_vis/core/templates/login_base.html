@@ -3,6 +3,13 @@
   <head>
     <title>{% block title %}{% endblock %}</title>
 
+    <style>
+      #login_background {
+        background: url('{% static "login_background.png" %}');
+        background-size: cover;
+      }
+    </style>
+
     <!-- CSS only -->
     <link
       rel="stylesheet"
@@ -29,7 +36,10 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class=" d-flex justify-content-start align-items-center" style="background: url('{% static "1.png" %}');  background-size: cover;" >
+  <body
+    id="login_background"
+    class="d-flex justify-content-start align-items-center"
+  >
     {% block content %} {% endblock %}
   </body>
 </html>
