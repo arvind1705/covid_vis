@@ -1,316 +1,345 @@
 {% extends "base.html" %} {% block content %}
-<div class="container">
-  <main role="main" class="container">
-    <div class="starter-template">
-      <div class="parent">
-        <div>
-          <div
-            class="d-flex flex-column justify-content-center align-items-center"
-            style="
-              width: 350px;
-              height: 70px;
-              background: linear-gradient(
-                to bottom,
-                #f5ce67 0%,
-                #f8cd67 4%,
-                #f6cc66 7%,
-                #f7cb6c 13%,
-                #f5c66c 21%,
-                #f8c76b 23%,
-                #f7c570 27%,
-                #f7c36f 33%,
-                #f9c174 39%,
-                #f8bf72 40%,
-                #f9ba73 47%,
-                #f9ba77 52%,
-                #fdb877 56%,
-                #fab677 57%,
-                #f9b479 60%,
-                #fab17c 67%,
-                #fcb17a 69%,
-                #fbaf7e 74%,
-                #fcab7c 77%,
-                #fcab7e 84%,
-                #fdaa82 85%,
-                #fca683 100%
-              );
-              border-radius: 10px;
-            "
-          >
-            <span>Confirmed</span>
-            <strong>{{covid_positive.sum|safe}}</strong>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <title>COVID 19</title>
+  </head>
+  <body onload="bodyLoaded()">
+    <div class="preloader"></div>
+    <div class="scrollToTop"></div>
+    <nav>
+      <div class="container">
+        <div class="brand">
+          <div class="logo">
+            <img src="assets/Logo.png" alt="" />
           </div>
-          <canvas width="350" height="350" id="confirmed_chart"></canvas>
+          <div class="responsive-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
         </div>
 
-        <div>
-          <div
-            class="d-flex flex-column justify-content-center align-items-center"
-            style="
-              width: 350px;
-              height: 70px;
-              background: linear-gradient(
-                to bottom,
-                #a5c9fd 0%,
-                #a5c9fd 6%,
-                #a7cbff 8%,
-                #a5c9fd 11%,
-                #a7cbff 11%,
-                #aacffc 28%,
-                #b0d5ff 44%,
-                #b0d6fb 48%,
-                #b5dbff 62%,
-                #b4dbfc 62%,
-                #b8dffe 75%,
-                #bae2fb 79%,
-                #bce4fe 91%,
-                #bde6fa 96%,
-                #bee7fd 100%
-              );
-              border-radius: 10px;
-            "
-          >
-            <span>Active</span>
-            <strong>{{active.sum|safe}}</strong>
-          </div>
-          <canvas width="350" height="350" id="active_chart"></canvas>
-        </div>
-
-        <div>
-          <div
-            class="d-flex flex-column justify-content-center align-items-center"
-            style="
-              width: 350px;
-              height: 70px;
-              background: linear-gradient(
-                to bottom,
-                #9ae69c 0%,
-                #9ce999 5%,
-                #9cea9e 6%,
-                #9cea9e 6%,
-                #a0e99a 10%,
-                #a3eb95 24%,
-                #adee92 36%,
-                #adee90 40%,
-                #b3ef8f 45%,
-                #b0f08f 46%,
-                #b4f18a 50%,
-                #b7f18d 51%,
-                #b6f08a 53%,
-                #baf18b 58%,
-                #c4f780 77%,
-                #c9f681 86%,
-                #ccfa7e 90%,
-                #cbf77c 94%,
-                #cff87e 96%,
-                #cff87e 100%
-              );
-              border-radius: 10px;
-            "
-          >
-            <span>Recovered</span>
-            <strong>{{recovered.sum|safe}}</strong>
-          </div>
-          <canvas width="350" height="350" id="recovered_chart"></canvas>
-        </div>
-
-        <div>
-          <div
-            class="d-flex flex-column justify-content-center align-items-center"
-            style="
-              width: 350px;
-              height: 70px;
-              background: linear-gradient(
-                to bottom,
-                #ff8582 0%,
-                #fe8685 16%,
-                #ff908e 44%,
-                #fe908f 53%,
-                #ff9692 62%,
-                #ff9597 67%,
-                #ff9a98 84%,
-                #ff9b9b 85%,
-                #fe9c9d 91%,
-                #ff9e98 96%,
-                #ff9d9c 96%,
-                #ff9e9d 100%
-              );
-              border-radius: 10px;
-            "
-          >
-            <span>Deceased</span>
-            <strong>{{deceased.sum|safe}}</strong>
-          </div>
-          <canvas width="350" height="350" id="deceased_chart"></canvas>
+        <div class="links">
+          <ul>
+            <li><a href="#about" id="nav-link">Overview</a></li>
+            <li><a href="#contagion" id="nav-link">Contagion</a></li>
+            <li><a href="#symptoms" id="nav-link">Symptoms</a></li>
+            <li><a href="#solution" id="nav-link">Prevention</a></li>
+            <li><button>Contact</button></li>
+          </ul>
         </div>
       </div>
-    </div>
-  </main>
-</div>
+    </nav>
+    <section class="starter">
+      <div class="info">
+        <h3 class="subTitle">COVID-19 Alert</h3>
+        <h1 class="title">Stay At Home Quarantine To Stop Corona Virus</h1>
+        <h5 class="description">
+          There is No Specific Medicine To Prevent Or Treat Coronavirus Disease
+          (COVID-19). People May Need Supportive Care To.
+        </h5>
+        <button>Let Us Help</button>
+      </div>
+      <div class="image">
+        <img src="assets/starter.png" alt="" />
+      </div>
+    </section>
+    <section class="about" id="about">
+      <div class="image">
+        <img src="assets/whatIsCovid.png" alt="" />
+      </div>
+      <div class="info">
+        <h4 class="subTitle">What Is Covid-19</h4>
+        <h2 class="title">Coronavirus</h2>
+        <p class="description">
+          Corona Viruses are a type of Virus. There are many different kinds,
+          and some cause disease. A newly identified type has caused a recent
+          outbreak of Respiratory illness now called COVID-19.
+        </p>
+        <button>Learn More</button>
+      </div>
+    </section>
+    <section class="contagion" id="contagion">
+      <div class="info">
+        <h4 class="subTitle">Covid-19</h4>
+        <h2 class="title">Contagion</h2>
+        <p class="description">
+          Corona Viruses are a type of virus. There are many different kinds,
+          and some cause disease. A newly identified type.
+        </p>
+      </div>
+      <div class="content">
+        <div class="virus">
+          <img src="assets/virus1.png" alt="" />
+        </div>
+        <div class="cards">
+          <div class="card">
+            <img src="assets/airTransmission.png" alt="" />
+            <div class="text">
+              <h3 class="title">Air Transmission</h3>
+              <p class="description">
+                Objectively evolve tactical expertise before extensible
+                initiatives.
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="assets/humanContact.png" alt="" />
+            <div class="text">
+              <h3 class="title">Human Contacts</h3>
+              <p class="description">
+                Washing your hands is one of the simplest ways you can protect.
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="assets/containedObject.png" alt="" />
+            <div class="text">
+              <h3 class="title">Air Transmission</h3>
+              <p class="description">
+                Use the tissue while Sneezing. In this Way, You Can Protect Your
+                Droplets.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="symptoms" id="symptoms">
+      <div class="info">
+        <h4 class="subTitle">Covid-19</h4>
+        <h2 class="title">Symptoms</h2>
+        <p class="description">
+          Corona Viruses are a type of virus. There are many different kinds,
+          and some cause disease. A newly identified typepe has Caused a recent
+          outbreak of respiratory.
+        </p>
+      </div>
+      <div class="image">
+        <img src="assets/symptoms.png" alt="" />
+      </div>
+    </section>
+    <section class="solutions" id="solution">
+      <div class="virus">
+        <img src="assets/virus3.png" alt="" />
+      </div>
+      <div class="virus2">
+        <img src="assets/virus1.png" alt="" />
+      </div>
+      <div class="virus3">
+        <img src="assets/virus4.png" alt="" />
+      </div>
 
-<script>
-  const date_sorter = function (a, b) {
-    const date1 = new Date(a);
-    const date2 = new Date(b);
-    return date1 - date2;
-  };
+      <div class="info">
+        <h4 class="subTitle">Covid-19</h4>
+        <h2 class="title">What Should We Do <span>?</span></h2>
+        <p class="description">
+          Corona Viruses are a type of virus. There are many different kinds,
+          and some cause disease. A newly identified type.
+        </p>
+      </div>
+      <div class="content">
+        <div class="solution">
+          <div class="solution-info">
+            <div class="round">01</div>
+            <div class="info-container">
+              <h2 class="title">Wear Masks</h2>
+              <p class="description">
+                Continually seize impactful vitals rather than future-proof
+                supply chains. Uniquely exploit emerging niches via fully tested
+                meta-services. Competently pursue standards compliant leadership
+                skills vis-a-vis pandemic "Outside the Box" Thinking.
+              </p>
+            </div>
+          </div>
+          <div class="image">
+            <img src="assets/girl1.png" alt="" />
+          </div>
+        </div>
+        <div class="solution">
+          <div class="image">
+            <img src="assets/girl2.png" alt="" />
+          </div>
+          <div class="solution-info">
+            <div class="round">02</div>
+            <div class="info-container">
+              <h2 class="title">Wash your hands</h2>
+              <p class="description">
+                Continually seize impactful vitals rather than future-proof
+                supply chains. Uniquely exploit emerging niches via fully tested
+                meta-services. Competently pursue standards compliant leadership
+                skills vis-a-vis pandemic "Outside the Box" Thinking.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="solution">
+          <div class="solution-info">
+            <div class="round">03</div>
+            <div class="info-container">
+              <h2 class="title">Use Nose - Rag</h2>
+              <p class="description">
+                Continually seize impactful vitals rather than future-proof
+                supply chains. Uniquely exploit emerging niches via fully tested
+                meta-services. Competently pursue standards compliant leadership
+                skills vis-a-vis pandemic "Outside the Box" Thinking.
+              </p>
+            </div>
+          </div>
+          <div class="image">
+            <img src="assets/girl3.png" alt="" />
+          </div>
+        </div>
+        <div class="solution">
+          <div class="image">
+            <img src="assets/girl4.png" alt="" />
+          </div>
+          <div class="solution-info">
+            <div class="round">04</div>
+            <div class="info-container">
+              <h2 class="title">Avoid Contacts</h2>
+              <p class="description">
+                Continually seize impactful vitals rather than future-proof
+                supply chains. Uniquely exploit emerging niches via fully tested
+                meta-services. Competently pursue standards compliant leadership
+                skills vis-a-vis pandemic "Outside the Box" Thinking.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="map">
+      <div class="image-container">
+        <div class="image">
+          <img src="assets/map.png" alt="" />
+        </div>
+        <div class="map-search"><i class="fas fa-search"></i></div>
+        <div class="map-options">
+          <i class="fas fa-plus"></i>
+          <i class="fas fa-minus"></i>
+          <div class="arrows">
+            <i class="fas fa-sort-up"></i>
+            <i class="fas fa-sort-down"></i>
+          </div>
+        </div>
+      </div>
+      <div class="reports">
+        <div class="title-container">
+          <h2 class="title">Live Reports</h2>
+          <div class="arrows"></div>
+        </div>
+        <div class="report-container">
+          <div class="report">
+            <div class="country">
+              <img src="assets/india.png" alt="" />
+              <h3>India</h3>
+            </div>
+            <div class="numbers">
+              <h4>100,392</h4>
+              <i class="fas fa-sort-up"></i>
+            </div>
+          </div>
+          <div class="report">
+            <div class="country">
+              <img src="assets/canada.png" alt="" />
+              <h3>Canada</h3>
+            </div>
+            <div class="numbers">
+              <h4>86,498</h4>
+              <i class="fas fa-sort-up"></i>
+            </div>
+          </div>
+          <div class="report">
+            <div class="country">
+              <img src="assets/united-states.png" alt="" />
+              <h3>USA</h3>
+            </div>
+            <div class="numbers">
+              <h4>81,340</h4>
+              <i class="fas fa-sort-down"></i>
+            </div>
+          </div>
+          <div class="report">
+            <div class="country">
+              <img src="assets/italy.png" alt="" />
+              <h3>Italy</h3>
+            </div>
+            <div class="numbers">
+              <h4>64,049</h4>
+              <i class="fas fa-sort-up"></i>
+            </div>
+          </div>
+          <div class="report">
+            <div class="country">
+              <img src="assets/china.png" alt="" />
+              <h3>China</h3>
+            </div>
+            <div class="numbers">
+              <h4>50,871s</h4>
+              <i class="fas fa-sort-up"></i>
+            </div>
+          </div>
+          <div class="report">
+            <div class="country">
+              <img src="assets/united-kingdom.png" alt="" />
+              <h3>UK</h3>
+            </div>
+            <div class="numbers">
+              <h4>32,332</h4>
+              <i class="fas fa-sort-up"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="contact">
+      <h1 class="title">Have Question in mind ?</h1>
+      <h1 class="title">Let us help you</h1>
+      <div class="form">
+        <input type="text" placeholder="kishansheth21@gmail.com" />
+        <button>Send</button>
+      </div>
+    </section>
+    <footer>
+      <div class="logo">
+        <img src="assets/Logo.png" alt="" />
+      </div>
+      <div class="links">
+        <ul>
+          <li><a href="">Overview</a></li>
+          <li><a href="">Symptoms</a></li>
+          <li><a href="">Prevention</a></li>
+          <li><a href="">Treatment</a></li>
+        </ul>
+      </div>
+      <div class="social-links">
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-youtube"></i>
+        <i class="fab fa-linkedin"></i>
+      </div>
+    </footer>
+    <span class="copyright"
+      >2021 &copy; All rights reserved by Kishan Sheth</span
+    >
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
 
-  const covid_positive_labels = "{{covid_positive.labels|safe}}".split(",");
-  covid_positive_labels.sort(date_sorter);
-  const covid_positive_data_set = "{{covid_positive.data|safe}}".split(",");
-
-  const deceased_labels = "{{deceased.labels|safe}}".split(",");
-  deceased_labels.sort(date_sorter);
-  const deceased_data_set = "{{deceased.data|safe}}".split(",");
-
-  const recovered_labels = "{{recovered.labels|safe}}".split(",");
-  recovered_labels.sort(date_sorter);
-  const recovered_data_set = "{{recovered.data|safe}}".split(",");
-
-  const active_labels = "{{active.labels|safe}}".split(",");
-  active_labels.sort(date_sorter);
-  const active_data_set = "{{active.data|safe}}".split(",");
-
-  const covid_positive_data = {
-    labels: covid_positive_labels,
-    datasets: [
-      {
-        // label: "CONFIRMED",
-        backgroundColor: "orange",
-        borderColor: "orange",
-        data: covid_positive_data_set,
-        spanGaps: true,
-      },
-    ],
-  };
-
-  const covid_positive_config = {
-    type: "line",
-    data: covid_positive_data,
-    options: {
-      responsive: false,
-      maintainAspectRatio: false,
-      plugins: {
-        title: {
-          // display: true,
-          text: "Total: {{covid_positive.sum|safe}}",
-        },
-        legend: { labels: { font: { size: 14 } }, display: false },
-      },
-      scales: {
-        y: { display: true, ticks: { color: "black", fontSize: 20 } },
-        x: { display: true },
-      },
-    },
-  };
-
-  const active_data = {
-    labels: active_labels,
-    datasets: [
-      {
-        label: "ACTIVE",
-        backgroundColor: "blue",
-        borderColor: "blue",
-        data: active_data_set,
-        spanGaps: true,
-      },
-    ],
-  };
-
-  const active_config = {
-    type: "line",
-    data: active_data,
-    options: {
-      responsive: false,
-      maintainAspectRatio: false,
-      plugins: {
-        title: {
-          // display: true,
-          text: "Total: {{active.sum|safe}}",
-        },
-        legend: { labels: { font: { size: 14 } }, display: false },
-      },
-      scales: { y: { display: true }, x: { display: true } },
-    },
-  };
-
-  const recovered_data = {
-    labels: recovered_labels,
-    datasets: [
-      {
-        label: "RECOVERED",
-        backgroundColor: "green",
-        borderColor: "green",
-        data: recovered_data_set,
-        spanGaps: true,
-      },
-    ],
-  };
-
-  const recovered_config = {
-    type: "line",
-    data: recovered_data,
-    options: {
-      responsive: false,
-      maintainAspectRatio: false,
-      plugins: {
-        title: {
-          // display: true,
-          text: "Total: {{recovered.sum|safe}}",
-        },
-        legend: { labels: { font: { size: 14 } }, display: false },
-      },
-      scales: { y: { display: true }, x: { display: true } },
-    },
-  };
-
-  const deceased_data = {
-    labels: deceased_labels,
-    datasets: [
-      {
-        label: "DECEASED",
-        backgroundColor: "red",
-        borderColor: "red",
-        data: deceased_data_set,
-        spanGaps: true,
-      },
-    ],
-  };
-
-  const deceased_config = {
-    type: "line",
-    data: deceased_data,
-    options: {
-      responsive: false,
-      maintainAspectRatio: false,
-      plugins: {
-        title: {
-          // display: true,
-          text: "Total: {{deceased.sum|safe}}",
-        },
-        legend: { labels: { font: { size: 14 } }, display: false },
-      },
-      scales: { y: { display: true }, x: { display: true } },
-    },
-  };
-
-  const confirmed_chart = new Chart(
-    document.getElementById("confirmed_chart"),
-    covid_positive_config
-  );
-  const active_chart = new Chart(
-    document.getElementById("active_chart"),
-    active_config
-  );
-  const recovered_chart = new Chart(
-    document.getElementById("recovered_chart"),
-    recovered_config
-  );
-  const deceased_chart = new Chart(
-    document.getElementById("deceased_chart"),
-    deceased_config
-  );
-</script>
 
 <footer class="bg-light text-center text-lg-start">
   <div class="container p-4">
