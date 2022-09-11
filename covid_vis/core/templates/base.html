@@ -35,7 +35,7 @@
                     <a href="{% url 'index' %}" id="nav-link">Pandemic Visualisation</a>
 
                     <div class="responsive-toggle">
-                        <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:black"></i></span>
+                        <span><i class="fa fa-bars" aria-hidden="true" style="color:black"></i></span>
                     </div>
                 </div>
 
@@ -43,10 +43,10 @@
                     <ul>
                         <li><a href="{% url 'index' %}" id="nav-link">Dashboard</a></li>
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="#" id="nav-link" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Menu
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" style="margin: 0;" href="{% url 'hospital' %}">Hospitals</a>
                                 <a class="dropdown-item" style="margin: 0;" href="{% url 'graphs' %}">Graphs</a>
                                 <a class="dropdown-item" style="margin: 0;" href="{% url 'links' %}">Important Information </a>
