@@ -1,33 +1,54 @@
-{% extends 'login_base.html' %} {% block title %} Login {% endblock %} 
-{% block content %} 
 {% load static %}
-<div class="page-content">
-    <div class="content d-flex justify-content-center align-items-center">
-      <div class="card mb-0" style="margin-left: 100;">
-        <div class="card-body border-orange">
-          <div class="text-center mb-3">
-            <i>
-              <img
-                class="login-logo"
-                src="{% static 'icon.png' %}"
-                style="width: 100px"
-              />
-            </i>
-            <h5 class="mb-0">Pandemic Visualisation Login</h5>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="Pandemic Visualisation" />
+        <meta property="og:description" content="Pandemic Visualisation for Chikamagalur District." />
+        <meta property="og:url" content="https://pacific-earth-94803.herokuapp.com" />
+        <meta property="og:image" content="https://pacific-earth-94803.herokuapp.com/static/icon.png" />
+        <link rel="shortcut icon" type="image/png" href="{% static 'icon.png' %}" />
 
-            <span class="d-block text-muted">Welcome!</span>
-          </div>
+        <title>Pandemic Visualisation</title>
 
-          <div class="form-group text-center text-muted content-divider">
-            <span class="px-2">Sign in to your account</span>
-          </div>
+        <style>
+            #login_background {
+                background: url('{% static "login_background.png" %}');
+                background-size: cover;
+            }
+        </style>
 
-          <form class="form d-flex flex-column justify-content-center align-items-center" role="form" method="POST">
-            {% csrf_token %} {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </head>
+    <body id="login_background" class="d-flex justify-content-start align-items-center">
+        <div class="page-content">
+            <div class="content d-flex justify-content-center align-items-center">
+                <div class="card mb-0" style="margin-left: 100;">
+                    <div class="card-body border-orange">
+                        <div class="text-center mb-3">
+                            <i>
+                                <img class="login-logo" src="{% static 'icon.png' %}" style="width: 100px;" />
+                            </i>
+                            <h5 class="mb-0">Pandemic Visualisation Login</h5>
+
+                            <span class="d-block text-muted">Welcome!</span>
+                        </div>
+
+                        <div class="form-group text-center text-muted content-divider">
+                            <span class="px-2">Sign in to your account</span>
+                        </div>
+
+                        <form class="form d-flex flex-column justify-content-center align-items-center" role="form" method="POST">
+                            {% csrf_token %} {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-  </div>
-</div>
-{% endblock %}
+    </body>
+</html>

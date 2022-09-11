@@ -1,192 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="Pandemic Visualisation" />
-    <meta
-      property="og:description"
-      content="Pandemic Visualisation for Chikamagalur District."
-    />
-    <meta
-      property="og:url"
-      content="https://pacific-earth-94803.herokuapp.com"
-    />
-    <meta
-      property="og:image"
-      content="https://pacific-earth-94803.herokuapp.com/static/icon.png"
-    />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="Pandemic Visualisation" />
+        <meta property="og:description" content="Pandemic Visualisation for Chikamagalur District." />
+        <meta property="og:url" content="https://pacific-earth-94803.herokuapp.com" />
+        <meta property="og:image" content="https://pacific-earth-94803.herokuapp.com/static/icon.png" />
 
-    <title>Pandemic Visualisation</title>
-    {% load static %}
+        <title>Pandemic Visualisation</title>
+        {% load static %}
 
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
-    <link
-      rel="shortcut icon"
-      type="image/png"
-      href="{% static 'icon.png' %}"
-    />
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <link rel="shortcut icon" type="image/png" href="{% static 'icon.png' %}" />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-      crossorigin="anonymous"
-    ></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
-      integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-  </head>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+            integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+    </head>
+    <body>
+        <nav>
+            <div class="container">
+                <div class="brand">
+                    <div class="logo">
+                        <img src="{% static 'icon.png' %}" alt="" width="70px" height="70px" />
+                    </div>
+                    <a href="{% url 'index' %}" id="nav-link">Pandemic Visualisation</a>
 
-  <body onload="bodyLoaded()">
-    <nav>
-      <div class="container">
-        <div class="brand">
-          <div class="logo">
-            <img
-              src="{% static 'icon.png' %}"
-              alt=""
-              width="70px"
-              height="70px"
-            />
-          </div>
-          <a href="{% url 'index' %}" id="nav-link">Pandemic Visualisation</a>
-          <div class="responsive-toggle">
-            <i class="fas fa-bars"></i>
-          </div>
-        </div>
+                    <div class="responsive-toggle">
+                        <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:black"></i></span>
+                    </div>
+                </div>
 
-        <div class="links">
-          <ul>
-            <li><a href="{% url 'index' %}" id="nav-link">Dashboard</a></li>
-            <li class="nav-item dropdown">
-              <a
-                class="dropdown-toggle"
-                href="#"
-                id="nav-link"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Menu
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" style="margin: 0;" href="{% url 'hospital' %}"
-                  >Hospitals</a
-                >
-                <a class="dropdown-item" style="margin: 0;" href="{% url 'graphs' %}">Graphs</a>
-                <a class="dropdown-item" style="margin: 0;" href="{% url 'links' %}"
-                  >Important Information
-                </a>
-              </div>
-            </li>
+                <div class="links">
+                    <ul>
+                        <li><a href="{% url 'index' %}" id="nav-link">Dashboard</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="#" id="nav-link" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Menu
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" style="margin: 0;" href="{% url 'hospital' %}">Hospitals</a>
+                                <a class="dropdown-item" style="margin: 0;" href="{% url 'graphs' %}">Graphs</a>
+                                <a class="dropdown-item" style="margin: 0;" href="{% url 'links' %}">Important Information </a>
+                            </div>
+                        </li>
 
-            <li>
-              <form class="d-flex" action="/admin/">
-                <button>Login</button>
-              </form>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+                        <li>
+                            <form class="d-flex" action="/admin/">
+                                <button>Login</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block content %} {% endblock %}
+        <script>
+            // Maintaining the responsive navbar state.
+            let navBarState = false;
+            const navbarToggle = document.querySelector(".responsive-toggle");
 
-    {% block content %}
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
-      integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
-      integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
-      crossorigin="anonymous"
-    ></script>
+            navbarToggle.addEventListener("click", () => {
+                const navlinks = document.querySelector(".links");
+                if (navBarState) {
+                    navlinks.style.top = "-40rem";
+                    navBarState = false;
+                } else {
+                    navlinks.style.top = "-4rem";
+                    navBarState = true;
+                }
+            });
 
-    <script>
-      // Preloader Animation while the body gets loaded
-      const preloader = document.querySelector(".preloader");
-      const bodyLoaded = () => {
-        setTimeout(() => {
-          preloader.style.display = "none";
-        }, 2000);
-      };
-
-      //Scroll To Top
-      const scrollToTop = document.querySelector(".scrollToTop");
-      //When Scroll Height is greater than 400 then display scroll to top.
-      window.addEventListener("scroll", () => {
-        window.pageYOffset > 400
-          ? (scrollToTop.style.display = "block")
-          : (scrollToTop.style.display = "none");
-      });
-
-      // Scroll to top on click
-      scrollToTop.addEventListener("click", () => {
-        window.scrollTo({ top: 0 });
-      });
-
-      // Maintaining the responsive navbar state.
-      let navBarState = false;
-      const navbarToggle = document.querySelector(".responsive-toggle");
-
-      navbarToggle.addEventListener("click", () => {
-        const navlinks = document.querySelector(".links");
-        if (navBarState) {
-          navlinks.style.top = "-40rem";
-          navBarState = false;
-        } else {
-          navlinks.style.top = "-4rem";
-          navBarState = true;
-        }
-      });
-
-      // When click on any link on the responsive navbar close the responsive navbar
-      const navLinks = document.querySelectorAll("#nav-link");
-      //Adding the event listeners to all the links on the responsive navbar
-      navLinks.forEach((link) =>
-        link.addEventListener("click", () => {
-          const navlinks = document.querySelector(".links");
-          navlinks.style.top = "-40rem";
-          navBarState = false;
-        })
-      );
-
-      // Scroll Reveal Animations
-      const sr = ScrollReveal({
-        origin: "top",
-        distance: "80px",
-        duration: 2000,
-        reset: true,
-      });
-
-      sr.reveal(
-        `.starter,.about
-        .contagion,.symptoms,
-        .solutions,.map,.contact,footer,span`,
-        {
-          interval: 200,
-        }
-      );
-    </script>
-  </body>
-  {% endblock %}
+            // When click on any link on the responsive navbar close the responsive navbar
+            const navLinks = document.querySelectorAll("#nav-link");
+            //Adding the event listeners to all the links on the responsive navbar
+            navLinks.forEach((link) =>
+                link.addEventListener("click", () => {
+                    const navlinks = document.querySelector(".links");
+                    navlinks.style.top = "-40rem";
+                    navBarState = false;
+                })
+            );
+        </script>
+    </body>
 </html>
