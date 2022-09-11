@@ -14,14 +14,18 @@
     />
     <meta
       property="og:image"
-      content="https://pacific-earth-94803.herokuapp.com/static/virus.png"
+      content="https://pacific-earth-94803.herokuapp.com/static/icon.png"
     />
 
     <title>Pandemic Visualisation</title>
     {% load static %}
 
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
-    <link rel="shortcut icon" type="image/png" href="{% static 'virus.png' %}" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'icon.png' %}"
+    />
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
@@ -43,97 +47,30 @@
     ></script>
   </head>
 
-    <body onload="bodyLoaded()">
-    <!-- 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <div class="d-flex flex-column">
-          <a class="navbar-brand" href="{% url 'index' %}">
-            <img
-              src="{% static 'icon.png' %}"
-              width="30"
-              height="30"
-              class="d-inline-block align-top"
-              alt=""
-            />
-            Pandemic Visualisation
-          </a>
-          <span style="margin-left: 35px">A Step ahead to save life</span>
-        </div>
-
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarTogglerDemo02"
-          aria-controls="navbarTogglerDemo02"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="{% url 'index' %}"
-                >Dashboard</a
-              >
-            </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Menu
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="{% url 'hospital' %}"
-                  >Hospitals</a
-                >
-                <a class="dropdown-item" href="{% url 'graphs' %}">Graphs</a>
-                <a class="dropdown-item" href="{% url 'links' %}"
-                  >Important Information
-                </a>
-              </div>
-            </li>
-          </ul>
-          <form class="d-flex" action="/admin/">
-            <button class="btn btn-outline-success" type="submit">Login</button>
-          </form>
-        </div>
-      </div>
-    </nav> -->
-
+  <body onload="bodyLoaded()">
     <nav>
       <div class="container">
         <div class="brand">
           <div class="logo">
-            <img src="{% static 'Logo.png' %}" alt="" />
+            <img
+              src="{% static 'icon.png' %}"
+              alt=""
+              width="70px"
+              height="70px"
+            />
           </div>
+          <a href="{% url 'index' %}" id="nav-link">Pandemic Visualisation</a>
           <div class="responsive-toggle">
             <i class="fas fa-bars"></i>
           </div>
         </div>
-    
+
         <div class="links">
           <ul>
             <li><a href="{% url 'index' %}" id="nav-link">Dashboard</a></li>
-            <!-- <li><a href="#contagion" id="nav-link">Contagion</a></li> -->
             <li class="nav-item dropdown">
               <a
-                class=" dropdown-toggle"
+                class="dropdown-toggle"
                 href="#"
                 id="nav-link"
                 role="button"
@@ -156,13 +93,11 @@
                 </a>
               </div>
             </li>
-            <li><a href="{% url 'index' %}" id="nav-link">Symptoms</a></li>
-            <li><a href="{% url 'index' %}" id="nav-link">Prevention</a></li>
 
             <li>
               <form class="d-flex" action="/admin/">
-              <button>Login</button>
-            </form>
+                <button>Login</button>
+              </form>
             </li>
           </ul>
         </div>
