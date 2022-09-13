@@ -32,7 +32,7 @@
                     <div class="logo">
                         <img src="{% static 'icon.png' %}" alt="" width="70px" height="70px" />
                     </div>
-                    <h1><a href="{% url 'index' %}" id="nav-link">Pandemic Visualisation</a></h1>
+                    <bold><a href="{% url 'index' %}" id="nav-link">Pandemic Visualisation</a></bold>
 
                     <div class="responsive-toggle">
                         <span><i class="fa fa-bars" aria-hidden="true" style="color:black"></i></span>
@@ -43,9 +43,9 @@
                     <ul>
                         <h2><li><a href="{% url 'index' %}" id="nav-link">Dashboard</a></li></bold>
                         <li class="nav-item dropdown">
-                            <h1><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <h2><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Menu
-                                </a></h1>
+                                </a></h2>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" style="margin: 0;" href="{% url 'hospital' %}">Hospitals</a>
                                 <a class="dropdown-item" style="margin: 0;" href="{% url 'graphs' %}">Pandemic Information</a>
