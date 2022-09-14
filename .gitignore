@@ -177,3 +177,4 @@ staticfiles/
 # static/
 .trunk/logs
 ngrok
+templates.zip
