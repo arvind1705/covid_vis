@@ -288,8 +288,22 @@ def hospital_detail(request, hospital_id):
     """
     hospital_data = Hospital.objects.get(id=hospital_id)
     hospitals_list = HospitalTable(Hospital.objects.filter(id=hospital_id))
+
+    is_covid_care_center = "No"
+    if hospital_data.is_covid_care_center:
+        is_covid_care_center = "Yes"
+
+    oxygen_concentrator_available = "Not Available"
+    if hospital_data.oxygen_concentrator_available:
+        oxygen_concentrator_available = "Available"
+
     return render(
         request,
         "hospital_detail.html",
-        {"hospital": hospital_data, "hospitals_list": hospitals_list},
+        {
+            "hospital": hospital_data,
+            "hospitals_list": hospitals_list,
+            "is_covid_care_center": is_covid_care_center,
+            "oxygen_concentrator_available": oxygen_concentrator_available,
+        },
     )

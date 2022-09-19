@@ -1,70 +1,157 @@
-{% extends "base.html" %} {% block content %} {% load render_table from django_tables2 %}
+{% extends "base.html" %} {% block content %}
 
-<style type="text/css">
-    .tg {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-    .tg td {
-        border-color: black;
-        border-style: solid;
-        border-width: 1px;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        overflow: hidden;
-        padding: 10px 5px;
-        word-break: normal;
-    }
-    .tg th {
-        border-color: black;
-        border-style: solid;
-        border-width: 1px;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        font-weight: normal;
-        overflow: hidden;
-        padding: 10px 5px;
-        word-break: normal;
-    }
-    .tg .tg-0lax {
-        text-align: left;
-        vertical-align: top;
-    }
-</style>
+<div class="contagion" id="contagion">
+  <div class="content">
+    <div class="cards" style="justify-content: start; align-content: start">
+      <div class="card" style="height: 30rem; width: 30rem">
+        <img style="width: 10rem; height: 25rem;" src="{{hospital.image_link}}" alt="" />
+        <div class="text">
+          <h3 class="title">{{hospital.name}}</h3>
+          <p class="description">
+            <span>{{hospital.address}} </span>
+            <span>{{hospital.city}} - {{hospital.zipcode}} </span>
+            <span>{{hospital.phone}} </span>
+          </p>
+        </div>
+      </div>
 
-<div class="d-flex flex-column justify-content-center align-items-center">
-    <!-- {% load static %} -->
+      <div
+        class="card"
+        style="
+          height: 30rem;
+          width: 45rem;
+          align-items: start;
+          justify-content: start;
+        "
+      >
+        <h3 class="title" style="padding-left: 2rem; padding-top: 1rem">
+          Key Information
+        </h3>
+        <br />
+        <canvas
+          style="padding-left: 2rem"
+          width="450"
+          height="225"
+          id="pie_chart"
+        ></canvas>
+        <br />
+        <h5
+          style="
+            justify-content: center;
+            align-content: center;
+            padding-left: 2rem;
+          "
+          class=""
+        >
+          Oxygen Concentrator : {{oxygen_concentrator_available}}
+        </h5>
 
-    <img src="{{hospital.image_link}}" alt="Image Not Found" style="width: 400px; height: 400px;" />
+        <h5
+          style="
+            justify-content: center;
+            align-content: center;
+            padding-left: 2rem;
+          "
+          class=""
+        >
+          Covid Care Center: {{is_covid_care_center}}
+        </h5>
 
-    <div class="d-flex flex-column justify-content-left align-items-start">
-        <strong>Name: {{hospital.name}} </strong>
-        <strong>Address: {{hospital.address}} </strong>
-        <strong>City: {{hospital.city}} </strong>
-        <strong>Zipcode: {{hospital.zipcode}} </strong>
-        <strong>Phone: {{hospital.phone}} </strong>
+        <h5
+          style="
+            justify-content: center;
+            align-content: center;
+            padding-left: 2rem;
+          "
+          class=""
+        >
+          Vaccination Available: Yes
+        </h5>
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="d-flex flex-column justify-content-center align-items-center">
-    <div style="overflow-y: scroll;">{% render_table hospitals_list %}</div>
+<div class="contagion" id="contagion">
+  <div class="content">
+    <div class="cards" style="justify-content: start; align-items: start">
+      <div class="card" style="height: 7rem; width: 78rem; align-items: start">
+        <div class="" style="justify-content: start; align-items: start">
+          <h4
+            style="
+              justify-content: start;
+              align-content: start;
+              padding-left: 2rem;
+            "
+            class=""
+          >
+            Ambulance Point of Contact
+          </h4>
+          <h5
+            style="
+              justify-content: center;
+              align-content: center;
+              padding-left: 2rem;
+            "
+            class=""
+          >
+            Name: {{hospital.ambulance_driver_name}}
+          </h5>
+          <h5
+            style="
+              justify-content: center;
+              align-content: center;
+              padding-left: 2rem;
+            "
+            class=""
+          >
+            Phone: {{hospital.ambulance_driver_phone}}
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="d-flex flex-column justify-content-center align-items-center">
-    <table class="tg">
-        <thead>
-            <tr>
-                <th class="tg-0lax">Ambulance Driver Name</th>
-                <th class="tg-0lax">Phone Number</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="tg-0lax">{{hospital.ambulance_driver_name}}</td>
-                <td class="tg-0lax">{{hospital.ambulance_driver_phone}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<script>
+  const total_no_of_beds = "{{hospital.total_no_of_beds|safe}}";
+  const beds_available = "{{hospital.beds_available|safe}}";
+  const no_icu_beds = "{{hospital.no_icu_beds|safe}}";
+
+  const pie_data = {
+    labels: ["Total Beds", "Beds Available", "ICU Beds"],
+    datasets: [
+      {
+        data: [total_no_of_beds, beds_available, no_icu_beds],
+        label: 'Beds Availability',
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+          "rgb(75, 192, 192)",
+        ],
+      },
+    ],
+  };
+
+  const pie_config = {
+    type: "bar",
+    data: pie_data,
+    options: {
+      indexAxis: "y",
+      responsive: false,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { font: { size: 14 } }, display: false },
+        title: {
+          text: "Beds Availability",
+          display: true
+        },
+      },
+    },
+  };
+
+  const pie_chart = new Chart(document.getElementById("pie_chart"), pie_config);
+</script>
 
 {% endblock content %}
