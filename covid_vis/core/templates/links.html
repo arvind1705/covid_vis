@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+{% load static %}
 
 <div class="contagion" id="contagion">
   <div class="content">
@@ -100,8 +101,8 @@
             <div class="parent">
                 <div class="content-box">
                     <figure>
-                        <a href="https://www.mohfw.gov.in/pdf/socialdistancingEnglish.pdf" target="_blank">
-                            <img src="https://www.mohfw.gov.in/assets/images/socialdistancingEnglish_page-0001.png" alt="Poster on Social distancing in a market place during COVID-19 English" />
+                        <a href="{% static 'socialdistancingEnglish.pdf' %}" target="_blank">
+                            <img src="{% static 'socialdistancingEnglish_page-0001.png' %}" alt="Poster on Social distancing in a market place during COVID-19 English" />
                         </a>
                     </figure>
                 </div>
