@@ -48,7 +48,7 @@ class HospitalTable(tables.Table):
         for the row from the table data.
         """
         return format_html(
-            '<a href="{}">{}</a>',
+            '<a style = "margin: 0;" href="{}">{}</a>',
             reverse("hospital_detail", kwargs={"hospital_id": record.id}),
             record.name,
         )

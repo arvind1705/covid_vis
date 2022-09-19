@@ -3,7 +3,7 @@
 <div class="d-flex flex-column justify-content-center align-items-start">
     <div>
         {% if filter %}
-        <form action="" method="get" class="d-flex flex-row">
+        <form action="" method="get" class="d-flex flex-row" style="padding-left: 0.5rem;">
             {% bootstrap_form filter.form layout='inline' %}
             <div class="">{% bootstrap_button 'Search' %}</div>
         </form>
