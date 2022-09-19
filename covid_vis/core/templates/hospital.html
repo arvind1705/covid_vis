@@ -3,14 +3,14 @@
 <div class="d-flex flex-column justify-content-center align-items-start">
     <div>
         {% if filter %}
-        <form action="" method="get" class="d-flex flex-row" style="padding-left: 0.5rem;">
+        <form action="" method="get" class="d-flex flex-row" style="padding-left: 1.5rem;">
             {% bootstrap_form filter.form layout='inline' %}
             <div class="">{% bootstrap_button 'Search' %}</div>
         </form>
         {% endif %}
     </div>
 
-    <div style="overflow-y: scroll;">
+    <div style="overflow-y: scroll; padding-left: 1.5rem;">
         {% render_table table 'django_tables2/bootstrap4.html' %}
     </div>
 </div>
