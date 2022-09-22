@@ -63,7 +63,7 @@ class HospitalFilter(FilterSet):
 class FilteredHospitalListView(SingleTableMixin, FilterView):
     table_class = HospitalTable
     model = Hospital
-    template_name = "hospital.html"
+    template_name = "hospital_list.html"
 
     filterset_class = HospitalFilter
 
@@ -78,46 +78,7 @@ def index(request):
     Returns:
         _type_: _description_
     """
-    data = {}
-
-    covid_positive_count_by_day = (
-        Patient.objects.filter(covid_positive=True)
-        .annotate(day=TruncDay("updated_at"))
-        .values("day")
-        .annotate(c=Count("covid_positive"))
-        .values("day", "c")
-    )
-    deceased_count_by_day = (
-        Patient.objects.filter(deceased=True)
-        .annotate(day=TruncDay("updated_at"))
-        .values("day")
-        .annotate(c=Count("deceased"))
-        .values("day", "c")
-    )
-    recovered_count_by_day = (
-        Patient.objects.filter(recovered=True)
-        .annotate(day=TruncDay("updated_at"))
-        .values("day")
-        .annotate(c=Count("recovered"))
-        .values("day", "c")
-    )
-    active_count_by_day = (
-        Patient.objects.filter(recovered=False, covid_positive=True)
-        .annotate(day=TruncDay("updated_at"))
-        .values("day")
-        .annotate(c=Count("recovered"))
-        .values("day", "c")
-    )
-
-    hospitals_list = HospitalTable(Hospital.objects.all())
-
-    data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
-    data.update({"deceased": get_label_data(deceased_count_by_day)})
-    data.update({"recovered": get_label_data(recovered_count_by_day)})
-    data.update({"active": get_label_data(active_count_by_day)})
-    data.update({"hospitals_list": hospitals_list})
-
-    return render(request, "index.html", data)
+    return render(request, "index.html")
 
 
 def hospital(request):
@@ -131,7 +92,7 @@ def hospital(request):
     """
     hospitals_list = HospitalTable(Hospital.objects.all())
     hospitals_list.paginate(page=request.GET.get("page", 1), per_page=10)
-    return render(request, "hospital.html", {"hospitals_list": hospitals_list})
+    return render(request, "hospital_list.html", {"hospitals_list": hospitals_list})
 
 
 def graphs(request):
@@ -252,18 +213,6 @@ def get_label_data(data):
         count += day["c"]
     # sorted(labels, key=lambda x: datetime.datetime.strptime(x, '%d %b'))
     return {"labels": ",".join(labels), "data": ",".join(datas), "sum": count}
-
-
-def links(request):
-    """_summary_
-
-    Args:
-        data (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    return render(request, "links.html")
 
 
 def helpline(request):

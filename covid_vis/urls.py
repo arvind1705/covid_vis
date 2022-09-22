@@ -31,7 +31,6 @@ urlpatterns = [
     path("hospital/", views.FilteredHospitalListView.as_view(), name="hospital"),
     path("<int:hospital_id>", views.hospital_detail, name="hospital_detail"),
     path("graphs/", views.graphs, name="graphs"),
-    path("links/", views.links, name="links"),
     path("helpline/", views.helpline, name="helpline"),
     re_path("", views.index, name="index"),
 ]
