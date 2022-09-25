@@ -58,13 +58,28 @@
               height="70px"
             />
           </div>
-          <a
-            style="text-decoration: none; color: #ef233c; margin: auto"
-            href="{% url 'index' %}"
-            id="nav-link"
-            class="h1"
-            >Pandemic Visualisation</a
-          >
+
+          <div class="d-flex flex-column">
+            <a
+              style="text-decoration: none; color: #ef233c; margin: auto"
+              href="{% url 'index' %}"
+              id="nav-link"
+              class="h1"
+              >Pandemic Visualisation</a
+            >
+            <a
+              style="
+                text-decoration: none;
+                color: #ef233c;
+                margin: auto;
+                padding-left: 6rem;
+              "
+              href="{% url 'index' %}"
+              id="nav-link"
+              class="h5"
+              >A step ahead to save lives.</a
+            >
+          </div>
 
           <div class="responsive-toggle">
             <span
