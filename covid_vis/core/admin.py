@@ -14,9 +14,10 @@ class HospitalAdmin(admin.ModelAdmin):
 
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ("name", "created_by", "created_at", "updated_at")
+    list_display = ("id", "name", "created_by", "created_at", "updated_at")
     exclude = ("created_by",)
     actions = None
+    search_fields = ['id', ]
 
     def get_queryset(self, request):
         qs = super(PersonAdmin, self).get_queryset(request)
