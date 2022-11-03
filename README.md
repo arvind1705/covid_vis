@@ -26,3 +26,7 @@ Requirements:
 ## Step to run production server using gunicorn
 
 1. Run the gunicorn server `gunicorn covid_vis.wsgi --bind 0.0.0.0:8000`
+
+covid_vis
+
+this is just for check up
