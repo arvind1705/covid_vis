@@ -1,14 +1,10 @@
-# Create your views here.
-"""
-views.py
-"""
 import datetime
 
 import django_tables2 as tables
 from dateutil.relativedelta import relativedelta
-from django.db.models import Count
+from django.db.models import Count, Q, Sum
 from django.db.models.functions import TruncDay
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils.html import format_html
 from django_filters import FilterSet
@@ -19,14 +15,7 @@ from .models import Hospital, Patient
 
 
 class HospitalTable(tables.Table):
-    """Hospital Table"""
-
     class Meta:
-        """
-        _summary_attrs = ['name', 'address', 'city', 'state',
-        'zip_code', 'phone_number', 'email']
-        """
-
         model = Hospital
         fields = (
             "name",
@@ -41,14 +30,8 @@ class HospitalTable(tables.Table):
         orderable = False
 
     def render_name(self, record):
-        """
-        This function will render over the default id column.
-        By adding <a href> HTML formatting around the id number a link will be added,
-        thus acting the same as linkify. The record stands for the entire record
-        for the row from the table data.
-        """
         return format_html(
-            '<a style = "margin: 0; text-transform: capitalize;" href="{}">{}</a>',
+            '<a href="{}">{}</a>',
             reverse("hospital_detail", kwargs={"hospital_id": record.id}),
             record.name,
         )
@@ -64,39 +47,37 @@ class FilteredHospitalListView(SingleTableMixin, FilterView):
     table_class = HospitalTable
     model = Hospital
     template_name = "hospital_list.html"
-
     filterset_class = HospitalFilter
 
 
-# views.py
 def index(request):
-    """_summary_
+    hospital_agg = Hospital.objects.aggregate(
+        total_beds=Sum("total_no_of_beds"),
+        available_beds=Sum("beds_available"),
+        icu_beds=Sum("no_icu_beds"),
+        total_hospitals=Count("id"),
+    )
+    patient_agg = Patient.objects.aggregate(
+        total_patients=Count("id"),
+        covid_positive=Count("id", filter=Q(covid_positive=True)),
+        recovered=Count("id", filter=Q(recovered=True)),
+        deceased=Count("id", filter=Q(deceased=True)),
+    )
 
-    Args:
-        request (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    return render(request, "index.html")
-
-
-def hospital(request):
-    """_summary_
-
-    Args:
-        request (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    hospitals_list = HospitalTable(Hospital.objects.all())
-    hospitals_list.paginate(page=request.GET.get("page", 1), per_page=10)
-    return render(request, "hospital_list.html", {"hospitals_list": hospitals_list})
+    context = {
+        "total_hospitals": hospital_agg["total_hospitals"] or 0,
+        "total_beds": hospital_agg["total_beds"] or 0,
+        "available_beds": hospital_agg["available_beds"] or 0,
+        "icu_beds": hospital_agg["icu_beds"] or 0,
+        "total_patients": patient_agg["total_patients"] or 0,
+        "covid_positive": patient_agg["covid_positive"] or 0,
+        "recovered": patient_agg["recovered"] or 0,
+        "deceased": patient_agg["deceased"] or 0,
+    }
+    return render(request, "index.html", context)
 
 
 def graphs(request):
-    """_summary_"""
     today = datetime.date.today()
     data = {}
 
@@ -118,43 +99,20 @@ def graphs(request):
     ).count()
 
     age_data = {
-        "0-18": str(age_0_18),
-        "19-40": str(age_19_40),
-        "41-60": str(age_41_60),
-        "Above 60": str(age_61_100),
-    }
-    age_data = {
-        "labels": ",".join(age_data.keys()),
-        "data": ",".join(age_data.values()),
+        "labels": "0-18,19-40,41-60,Above 60",
+        "data": f"{age_0_18},{age_19_40},{age_41_60},{age_61_100}",
     }
 
     first_vaccinated_count = Patient.objects.filter(vaccination_status="F").count()
     second_vaccinated_count = Patient.objects.filter(vaccination_status="S").count()
     precautions_count = Patient.objects.filter(vaccination_status="P").count()
-    total_vaccine_count = (
-        first_vaccinated_count + second_vaccinated_count + precautions_count
-    )
-
+    total_vaccine_count = first_vaccinated_count + second_vaccinated_count + precautions_count
     total_patients = Patient.objects.count()
-
-    not_vaccinated_count = (
-        total_patients
-        - first_vaccinated_count
-        - second_vaccinated_count
-        - precautions_count
-    )
+    not_vaccinated_count = total_patients - total_vaccine_count
 
     vaccine_data = {
-        "Total": str(total_vaccine_count),
-        "First Dose": str(first_vaccinated_count),
-        "Second Dose": str(second_vaccinated_count),
-        "Precaution Dose": str(precautions_count),
-        "Not Vaccinated": str(not_vaccinated_count),
-    }
-
-    vaccine_data = {
-        "labels": ",".join(vaccine_data.keys()),
-        "data": ",".join(vaccine_data.values()),
+        "labels": "Total,First Dose,Second Dose,Precaution Dose,Not Vaccinated",
+        "data": f"{total_vaccine_count},{first_vaccinated_count},{second_vaccinated_count},{precautions_count},{not_vaccinated_count}",
     }
 
     covid_positive_count_by_day = (
@@ -188,7 +146,6 @@ def graphs(request):
 
     data.update({"age_data": age_data})
     data.update({"vaccine_data": vaccine_data})
-
     data.update({"covid_positive": get_label_data(covid_positive_count_by_day)})
     data.update({"deceased": get_label_data(deceased_count_by_day)})
     data.update({"recovered": get_label_data(recovered_count_by_day)})
@@ -198,60 +155,29 @@ def graphs(request):
 
 
 def get_label_data(data):
-    """_summary_
-
-    Args:
-        data (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
     labels, datas, count = [], [], 0
     for day in data:
         labels.append(day["day"].strftime("%d %b"))
         datas.append(str(day["c"]))
         count += day["c"]
-    # sorted(labels, key=lambda x: datetime.datetime.strptime(x, '%d %b'))
     return {"labels": ",".join(labels), "data": ",".join(datas), "sum": count}
 
 
 def helpline(request):
-    """_summary_
-
-    Args:
-        data (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
     return render(request, "helpline.html")
 
 
 def hospital_detail(request, hospital_id):
-    """_summary_
-    Args:
-        data (_type_): _description_
+    hospital_data = get_object_or_404(Hospital, id=hospital_id)
 
-    Returns:
-        _type_: _description_
-    """
-    hospital_data = Hospital.objects.get(id=hospital_id)
-    hospitals_list = HospitalTable(Hospital.objects.filter(id=hospital_id))
-
-    is_covid_care_center = "No"
-    if hospital_data.is_covid_care_center:
-        is_covid_care_center = "Yes"
-
-    oxygen_concentrator_available = "Not Available"
-    if hospital_data.oxygen_concentrator_available:
-        oxygen_concentrator_available = "Available"
+    is_covid_care_center = "Yes" if hospital_data.is_covid_care_center else "No"
+    oxygen_concentrator_available = "Available" if hospital_data.oxygen_concentrator_available else "Not Available"
 
     return render(
         request,
         "hospital_detail.html",
         {
             "hospital": hospital_data,
-            "hospitals_list": hospitals_list,
             "is_covid_care_center": is_covid_care_center,
             "oxygen_concentrator_available": oxygen_concentrator_available,
         },

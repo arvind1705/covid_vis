@@ -1,31 +1,117 @@
-{% extends "base.html" %} {% block content %} {% load render_table from django_tables2 %} {% load bootstrap4 %} {% bootstrap_css %}
+{% extends "base.html" %}
+{% block title %}Hospitals{% endblock %}
+{% block header %}Hospitals{% endblock %}
 
-<div class="d-flex flex-column justify-content-center align-items-start">
-  <a
-    style="text-decoration: none; color: #ef233c; margin: auto"
-    href="{% url 'hospital' %}"
-    id="nav-link"
-    class="h3"
-    >List of Chikmagalur Hospitals</a
-  >
+{% block content %}
+<div class="space-y-6">
+    <!-- Search and filter -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <form action="" method="get" class="flex flex-col sm:flex-row gap-4">
+            <div class="flex-1">
+                <label for="id_name__contains" class="block text-sm font-medium text-gray-700 mb-1">Search Hospital</label>
+                <input type="text" name="name__contains" id="id_name__contains" value="{{ request.GET.name__contains }}" placeholder="Enter hospital name..." class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all" />
+            </div>
+            <div class="flex items-end">
+                <button type="submit" class="px-6 py-2.5 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 transition-all">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        Search
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
 
-  <div>
-    {% if filter %}
-    <form
-      action=""
-      method="get"
-      class="d-flex flex-row"
-      style="padding-left: 1.5rem"
-    >
-      {% bootstrap_form filter.form layout='inline' %}
-      <div class="">{% bootstrap_button 'Search' %}</div>
-    </form>
-    {% endif %}
-  </div>
+    <!-- Hospital table -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Hospital Name</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Beds</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">ICU Beds</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Available</th>
+                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">COVID Center</th>
+                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Oxygen</th>
+                        <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">Ambulance</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for row in table.page %}
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <a href="{% url 'hospital_detail' row.record.id %}" class="font-medium text-primary-600 hover:text-primary-700">{{ row.record.name }}</a>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ row.record.total_no_of_beds }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ row.record.no_icu_beds }}</td>
+                        <td class="px-6 py-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if row.record.beds_available > 0 %}bg-success-100 text-success-700{% else %}bg-danger-100 text-danger-700{% endif %}">
+                                {{ row.record.beds_available }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {% if row.record.is_covid_care_center %}
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-100">
+                                <svg class="w-4 h-4 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            {% else %}
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {% if row.record.oxygen_concentrator_available %}
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-100">
+                                <svg class="w-4 h-4 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            {% else %}
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {% if row.record.ambulance_available %}
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-100">
+                                <svg class="w-4 h-4 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            {% else %}
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                            <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            No hospitals found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-  <div style="overflow-y: scroll; padding-left: 1.5rem">
-    {% render_table table 'django_tables2/bootstrap4.html' %}
-  </div>
+        <!-- Pagination -->
+        {% if table.page.has_other_pages %}
+        <div class="flex items-center justify-between px-6 py-4 border-t border-gray-200">
+            <p class="text-sm text-gray-500">
+                Showing page {{ table.page.number }} of {{ table.page.paginator.num_pages }}
+            </p>
+            <div class="flex gap-2">
+                {% if table.page.has_previous %}
+                <a href="?page={{ table.page.previous_page_number }}{% if request.GET.name__contains %}&name__contains={{ request.GET.name__contains }}{% endif %}" class="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">Previous</a>
+                {% endif %}
+                {% if table.page.has_next %}
+                <a href="?page={{ table.page.next_page_number }}{% if request.GET.name__contains %}&name__contains={{ request.GET.name__contains }}{% endif %}" class="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50">Next</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
 </div>
-
-{% endblock content %}
+{% endblock %}

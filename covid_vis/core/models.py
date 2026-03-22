@@ -49,7 +49,7 @@ class Hospital(models.Model):
 
     def save(self, *args, **kwargs):
         self.beds_available = self._get_beds_available
-        super(Hospital, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name}"

@@ -1,54 +1,63 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="Pandemic Visualisation" />
-        <meta property="og:description" content="Pandemic Visualisation for Chikamagalur District." />
-        <meta property="og:url" content="https://pacific-earth-94803.herokuapp.com" />
-        <meta property="og:image" content="https://pacific-earth-94803.herokuapp.com/static/icon.png" />
-        <link rel="shortcut icon" type="image/png" href="{% static 'icon.png' %}" />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'icon.png' %}" />
+    <title>Login - COVID Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="bg-white rounded-2xl shadow-2xl p-8">
+            <div class="text-center mb-8">
+                <img src="{% static 'icon.png' %}" alt="Logo" class="w-16 h-16 mx-auto rounded-xl mb-4" />
+                <h1 class="text-2xl font-bold text-gray-900">Welcome Back</h1>
+                <p class="text-sm text-gray-500 mt-1">Sign in to COVID Dashboard</p>
+            </div>
 
-        <title>Pandemic Visualisation</title>
-
-        <style>
-            #login_background {
-              background: url('{% static "login_background.png" %}');
-              background-size: cover;
-            }
-          </style>
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
-        <link rel="stylesheet" href="{% static 'styles.css' %}" />
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    </head>
-    <body id="login_background" class="d-flex justify-content-start align-items-center">
-        <div class="page-content">
-            <div class="content d-flex justify-content-center align-items-center">
-                <div class="card mb-0" style="margin-left: 100;">
-                    <div class="card-body border-orange">
-                        <div class="text-center mb-3">
-                            <i>
-                                <img class="login-logo" src="{% static 'icon.png' %}" style="width: 100px;" />
-                            </i>
-                            <h5 class="mb-0">Pandemic Visualisation Login</h5>
-
-                            <span class="d-block text-muted">Welcome!</span>
-                        </div>
-
-                        <div class="form-group text-center text-muted content-divider">
-                            <span class="px-2">Sign in to your account</span>
-                        </div>
-
-                        <form class="form d-flex flex-column justify-content-center align-items-center" role="form" method="POST">
-                            {% csrf_token %} {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </form>
-                    </div>
+            <form method="POST" class="space-y-5">
+                {% csrf_token %}
+                {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
+                    <input
+                        type="{{ field.field.widget.input_type }}"
+                        name="{{ field.html_name }}"
+                        id="{{ field.id_for_label }}"
+                        value="{{ field.value|default:'' }}"
+                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                        placeholder="{{ field.label }}"
+                        {% if field.field.required %}required{% endif %}
+                    />
+                    {% if field.errors %}
+                    <p class="text-sm text-danger-600 mt-1">{{ field.errors.0 }}</p>
+                    {% endif %}
                 </div>
+                {% endfor %}
+
+                <button type="submit" class="w-full py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 transition-all">
+                    Sign In
+                </button>
+            </form>
+
+            {% if form.non_field_errors %}
+            <div class="mt-4 p-3 bg-danger-50 border border-danger-200 rounded-lg">
+                {% for error in form.non_field_errors %}
+                <p class="text-sm text-danger-700">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="mt-6 text-center">
+                <a href="{% url 'index' %}" class="text-sm text-primary-600 hover:text-primary-700">Back to Dashboard</a>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

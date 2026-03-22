@@ -1,137 +1,134 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
 {% load static %}
+{% block title %}Helpline{% endblock %}
+{% block header %}Emergency Helpline{% endblock %}
 
-<div class="contagion" id="contagion">
-  <div class="content">
-    <div class="cards" style="justify-content: center; align-content: center">
-      <div
-        class="card"
-        style="
-          height: 20rem;
-          width: 30rem;
-          align-items: start;
-          justify-content: start;
-        "
-      >
-        <h4 style="padding-left: 2rem; padding-top: 1rem">Important Links</h4>
-
-        <ul
-          class="d-flex flex-column align-content-start justify-content-start align-items-start"
-          style="padding: initial"
-        >
-          <li class="">
-            <a
-              href=" https://bbmp.gov.in/ "
-              title="Bruhat Bengaluru Mahanagara Palike"
-              target="_blank"
-              >Bruhat Bengaluru Mahanagara Palike
-            </a>
-          </li>
-
-          <li class="">
-            <a
-              href=" https://karunadu.karnataka.gov.in/hfw/Pages/home.aspx "
-              title="Department of Health and Family Welfare"
-              target="_blank"
-              >Department of Health and Family Welfare
-            </a>
-          </li>
-
-          <li class="">
-            <a
-              href=" https://icmr.nic.in/ "
-              title="The Indian Council of Medical Research"
-              target="_blank"
-              >The Indian Council of Medical Research
-            </a>
-          </li>
-
-          <li class="">
-            <a
-              href=" https://ncdc.gov.in/ "
-              title="National Centre for Disease Control"
-              target="_blank"
-              >National Centre for Disease Control
-            </a>
-          </li>
-
-          <li class="">
-            <a
-              href=" https://www.who.int/emergencies/diseases/novel-coronavirus-2019 "
-              title="WHO COVID-19"
-              target="_blank"
-              >WHO COVID-19
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div
-        class="card"
-        style="
-          height: 20rem;
-          width: 30rem;
-          align-items: start;
-          justify-content: start;
-        "
-      >
-        <h4 style="padding-left: 2rem; padding-top: 1rem">
-          COVID Help Line Numbers
-        </h4>
-        <ul
-          class="d-flex flex-column align-content-start justify-content-start align-items-start"
-          style="padding: revert"
-        >
-          <li>104 (Arogya Sahayava - Health Help Line)</li>
-          <li>108 (Ambulance)</li>
-          <li class="">14410 (Apthamitra Help Line)</li>
-          <li class="">1533 (BBMP COVID-19 Treatment &amp; Vaccination)</li>
-          <li class="">1075 (CoWIN Help Line)</li>
-          <li class="">9745697456 (Tele-Medicine)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<h1 class="text-center" style="color: red;">Awareness</h1>
-<div class="container">
-    <main role="main" class="container">
-        <div class="starter-template">
-            <div class="parent">
-                <div class="content-box">
-                    <figure>
-                        <a href="{% static 'socialdistancingEnglish.pdf' %}" target="_blank">
-                            <img src="{% static 'socialdistancingEnglish_page-0001.png' %}" alt="Poster on Social distancing in a market place during COVID-19 English" />
-                        </a>
-                    </figure>
+{% block content %}
+<div class="space-y-8">
+    <!-- Helpline numbers -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl border border-gray-200 p-6">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-lg bg-danger-100 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-danger-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                 </div>
+                <h3 class="font-semibold text-gray-900">Emergency Helplines</h3>
+            </div>
+            <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-danger-500"></span>
+                    <div>
+                        <span class="font-medium text-gray-900">104</span>
+                        <span class="text-sm text-gray-500 ml-2">Arogya Sahayava</span>
+                    </div>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-danger-500"></span>
+                    <div>
+                        <span class="font-medium text-gray-900">108</span>
+                        <span class="text-sm text-gray-500 ml-2">Ambulance</span>
+                    </div>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-danger-500"></span>
+                    <div>
+                        <span class="font-medium text-gray-900">14410</span>
+                        <span class="text-sm text-gray-500 ml-2">Apthamitra Helpline</span>
+                    </div>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-danger-500"></span>
+                    <div>
+                        <span class="font-medium text-gray-900">1533</span>
+                        <span class="text-sm text-gray-500 ml-2">BBMP COVID-19</span>
+                    </div>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-danger-500"></span>
+                    <div>
+                        <span class="font-medium text-gray-900">1075</span>
+                        <span class="text-sm text-gray-500 ml-2">CoWIN Helpline</span>
+                    </div>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-danger-500"></span>
+                    <div>
+                        <span class="font-medium text-gray-900">9745697456</span>
+                        <span class="text-sm text-gray-500 ml-2">Tele-Medicine</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-                <div class="content-box">
-                    <figure>
-                        <a href="{% static 'FINAL_14_03_2020_ENg.pdf' %}" target="_blank">
-                            <img src="{% static 'FINAL_14_03_2020_ENg_page-0001.png' %}" alt="When to get tested for COVID-19 English" />
-                        </a>
-                    </figure>
+        <!-- Important links -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
                 </div>
+                <h3 class="font-semibold text-gray-900">Important Links</h3>
+            </div>
+            <ul class="space-y-3">
+                <li>
+                    <a href="https://bbmp.gov.in/" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <span class="text-sm text-primary-600 font-medium">BBMP</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://karunadu.karnataka.gov.in/hfw/Pages/home.aspx" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <span class="text-sm text-primary-600 font-medium">Dept. of Health & Family Welfare</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://icmr.nic.in/" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <span class="text-sm text-primary-600 font-medium">ICMR</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://ncdc.gov.in/" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <span class="text-sm text-primary-600 font-medium">NCDC</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <span class="text-sm text-primary-600 font-medium">WHO COVID-19</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-                <div class="content-box">
-                    <figure>
-                        <a href="{% static 'ProtectivemeasuresEng.pdf' %}" target="_blank">
-                            <img src="{% static 'ProtectivemeasuresEng_page-0001.png' %}" alt="Posters for Safety measures against COVID-19 - English" />
-                        </a>
-                    </figure>
+        <!-- Awareness -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-lg bg-success-100 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 </div>
-
-                <div class="content-box">
-                    <figure>
-                        <a href="{% static 'Poster_Corona_ad_Eng.pdf' %}" target="_blank">
-                            <img src="{% static 'Poster_Corona_ad_Eng_page-0001.png' %}" alt="Do's and Don't Poster in English" />
-                        </a>
-                    </figure>
-                </div>
+                <h3 class="font-semibold text-gray-900">Awareness Materials</h3>
+            </div>
+            <div class="space-y-3">
+                <a href="{% static 'socialdistancingEnglish.pdf' %}" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <svg class="w-4 h-4 text-danger-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <span class="text-sm text-gray-700">Social Distancing Guidelines</span>
+                </a>
+                <a href="{% static 'FINAL_14_03_2020_ENg.pdf' %}" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <svg class="w-4 h-4 text-danger-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <span class="text-sm text-gray-700">When to Get Tested</span>
+                </a>
+                <a href="{% static 'ProtectivemeasuresEng.pdf' %}" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <svg class="w-4 h-4 text-danger-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <span class="text-sm text-gray-700">Protective Measures</span>
+                </a>
+                <a href="{% static 'Poster_Corona_ad_Eng.pdf' %}" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <svg class="w-4 h-4 text-danger-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <span class="text-sm text-gray-700">Do's and Don'ts</span>
+                </a>
             </div>
         </div>
-    </main>
+    </div>
 </div>
-{% endblock content %}
+{% endblock %}

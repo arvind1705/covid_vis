@@ -178,3 +178,4 @@ staticfiles/
 .trunk/logs
 ngrok
 templates.zip
+.env

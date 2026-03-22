@@ -1,264 +1,141 @@
-{% extends "base.html" %} {% block content %} {% load static %}
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block header %}Dashboard{% endblock %}
 
-<section class="starter">
-    <div class="info">
-        <h3 class="subTitle">Pandemic Visualisation Alert</h3>
-        <h1 class="title">Stay At Home Quarantine To Stop Corona Virus</h1>
-        <h5 class="description">
-            There is No Specific Medicine To Prevent Or Treat Coronavirus Disease (COVID-19). People May Need Supportive Care To.
-        </h5>
-        <button>Let Us Help</button>
-    </div>
-    <div class="image">
-        <img src="{% static 'starter.png' %}" alt="" />
-    </div>
-</section>
-<section class="about" id="about">
-    <div class="image">
-        <img src="{% static 'whatIsCovid.png' %}" alt="" />
-    </div>
-    <div class="info">
-        <h4 class="subTitle">What Is Covid-19</h4>
-        <h2 class="title">Coronavirus</h2>
-        <p class="description">
-            Corona Viruses are a type of Virus. There are many different kinds, and some cause disease. A newly identified type has caused a recent outbreak of Respiratory illness now called COVID-19.
-        </p>
-    </div>
-</section>
-<section class="contagion" id="contagion">
-    <div class="info">
-        <h4 class="subTitle">Covid-19</h4>
-        <h2 class="title">Contagion</h2>
-        <p class="description">
-            Corona Viruses are a type of virus. There are many different kinds, and some cause disease. A newly identified type.
-        </p>
-    </div>
-    <div class="content">
-        <div class="virus">
-            <img src="{% static 'virus1.png' %}" alt="" />
-        </div>
-        <div class="cards">
-            <div class="card">
-                <img src="{% static 'airTransmission.png' %}" alt="" />
-                <div class="text">
-                    <h3 class="title">Air Transmission</h3>
-                    <p class="description">
-                        Objectively evolve tactical expertise before extensible initiatives.
-                    </p>
-                </div>
+{% block content %}
+<!-- Stats cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white rounded-xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-500">Total Hospitals</p>
+                <p class="text-3xl font-bold text-gray-900 mt-1">{{ total_hospitals }}</p>
             </div>
-            <div class="card">
-                <img src="{% static 'humanContact.png' %}" alt="" />
-                <div class="text">
-                    <h3 class="title">Human Contacts</h3>
-                    <p class="description">
-                        Washing your hands is one of the simplest ways you can protect.
-                    </p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="{% static 'containedObject.png' %}" alt="" />
-                <div class="text">
-                    <h3 class="title">Air Transmission</h3>
-                    <p class="description">
-                        Use the tissue while Sneezing. In this Way, You Can Protect Your Droplets.
-                    </p>
-                </div>
+            <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
             </div>
         </div>
-    </div>
-</section>
-<section class="symptoms" id="symptoms">
-    <div class="info">
-        <h4 class="subTitle">Covid-19</h4>
-        <h2 class="title">Symptoms</h2>
-        <p class="description">
-            Corona Viruses are a type of virus. There are many different kinds, and some cause disease. A newly identified typepe has Caused a recent outbreak of respiratory.
-        </p>
-    </div>
-    <div class="image">
-        <img src="{% static 'symptoms.png' %}" alt="" />
-    </div>
-</section>
-<section class="solutions" id="solution">
-    <div class="virus">
-        <img src="{% static 'virus3.png' %}" alt="" />
-    </div>
-    <div class="virus2">
-        <img src="{% static 'virus1.png' %}" alt="" />
-    </div>
-    <div class="virus3">
-        <img src="{% static 'virus4.png' %}" alt="" />
+        <p class="text-xs text-gray-400 mt-3">Registered in district</p>
     </div>
 
-    <div class="info">
-        <h4 class="subTitle">Covid-19</h4>
-        <h2 class="title">What Should We Do <span>?</span></h2>
-        <p class="description">
-            Corona Viruses are a type of virus. There are many different kinds, and some cause disease. A newly identified type.
-        </p>
-    </div>
-    <div class="content">
-        <div class="solution">
-            <div class="solution-info">
-                <div class="round">01</div>
-                <div class="info-container">
-                    <h2 class="title">Wear Masks</h2>
-                    <p class="description">
-                        Continually seize impactful vitals rather than future-proof supply chains. Uniquely exploit emerging niches via fully tested meta-services. Competently pursue standards compliant leadership skills vis-a-vis pandemic
-                        "Outside the Box" Thinking.
-                    </p>
-                </div>
+    <div class="stat-card bg-white rounded-xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-500">Available Beds</p>
+                <p class="text-3xl font-bold text-success-600 mt-1">{{ available_beds }}</p>
             </div>
-            <div class="image">
-                <img src="{% static 'girl1.png' %}" alt="" />
+            <div class="w-12 h-12 rounded-lg bg-success-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
             </div>
         </div>
-        <div class="solution">
-            <div class="image">
-                <img src="{% static 'girl2.png' %}" alt="" />
-            </div>
-            <div class="solution-info">
-                <div class="round">02</div>
-                <div class="info-container">
-                    <h2 class="title">Wash your hands</h2>
-                    <p class="description">
-                        Continually seize impactful vitals rather than future-proof supply chains. Uniquely exploit emerging niches via fully tested meta-services. Competently pursue standards compliant leadership skills vis-a-vis pandemic
-                        "Outside the Box" Thinking.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="solution">
-            <div class="solution-info">
-                <div class="round">03</div>
-                <div class="info-container">
-                    <h2 class="title">Use Nose - Rag</h2>
-                    <p class="description">
-                        Continually seize impactful vitals rather than future-proof supply chains. Uniquely exploit emerging niches via fully tested meta-services. Competently pursue standards compliant leadership skills vis-a-vis pandemic
-                        "Outside the Box" Thinking.
-                    </p>
-                </div>
-            </div>
-            <div class="image">
-                <img src="{% static 'girl3.png' %}" alt="" />
-            </div>
-        </div>
-        <div class="solution">
-            <div class="image">
-                <img src="{% static 'girl4.png' %}" alt="" />
-            </div>
-            <div class="solution-info">
-                <div class="round">04</div>
-                <div class="info-container">
-                    <h2 class="title">Avoid Contacts</h2>
-                    <p class="description">
-                        Continually seize impactful vitals rather than future-proof supply chains. Uniquely exploit emerging niches via fully tested meta-services. Competently pursue standards compliant leadership skills vis-a-vis pandemic
-                        "Outside the Box" Thinking.
-                    </p>
-                </div>
-            </div>
-        </div>
+        <p class="text-xs text-gray-400 mt-3">Out of {{ total_beds }} total beds</p>
     </div>
-</section>
-<section class="map">
-    <div class="image-container">
-        <div class="image">
-            <img src="{% static 'map.png' %}" alt="" />
-        </div>
-    </div>
-    <div class="reports">
-        <div class="title-container">
-            <h2 class="title">Live Reports</h2>
-            <div class="arrows"></div>
-        </div>
-        <div class="report-container">
-            <div class="report">
-                <div class="country">
-                    <img src="{% static 'india.png' %}" alt="" />
-                    <h3>India</h3>
-                </div>
-                <div class="numbers">
-                    <h4>100,392</h4>
-                    <i class="fas fa-sort-up"></i>
-                </div>
-            </div>
-            <div class="report">
-                <div class="country">
-                    <img src="{% static 'canada.png' %}" alt="" />
-                    <h3>Canada</h3>
-                </div>
-                <div class="numbers">
-                    <h4>1,498</h4>
-                    <i class="fas fa-sort-up"></i>
-                </div>
-            </div>
-            <div class="report">
-                <div class="country">
-                    <img src="{% static 'united-states.png' %}" alt="" />
-                    <h3>USA</h3>
-                </div>
-                <div class="numbers">
-                    <h4>81,340</h4>
-                    <i class="fas fa-sort-down"></i>
-                </div>
-            </div>
-            <div class="report">
-                <div class="country">
-                    <img src="{% static 'italy.png' %}" alt="" />
-                    <h3>Italy</h3>
-                </div>
-                <div class="numbers">
-                    <h4>64,049</h4>
-                    <i class="fas fa-sort-up"></i>
-                </div>
-            </div>
-            <div class="report">
-                <div class="country">
-                    <img src="{% static 'china.png' %}" alt="" />
-                    <h3>China</h3>
-                </div>
-                <div class="numbers">
-                    <h4>50,871</h4>
-                    <i class="fas fa-sort-up"></i>
-                </div>
-            </div>
-            <div class="report">
-                <div class="country">
-                    <img src="{% static 'united-kingdom.png' %}" alt="" />
-                    <h3>UK</h3>
-                </div>
-                <div class="numbers">
-                    <h4>32,332</h4>
-                    <i class="fas fa-sort-up"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<footer>
-    <div class="logo">
-        <img src="{% static 'Logo.png' %}" alt="" />
-    </div>
-    <div class="links">
-        <ul>
-            <li><a href="">Overview</a></li>
-            <li><a href="">Symptoms</a></li>
-            <li><a href="">Prevention</a></li>
-            <li><a href="">Treatment</a></li>
-        </ul>
-    </div>
-    <div class="social-links">
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-facebook"></i>
-        <i class="fab fa-twitter"></i>
-        <i class="fab fa-youtube"></i>
-        <i class="fab fa-linkedin"></i>
-    </div>
-</footer>
 
-<span class="copyright">
-    Content Owned and Maintained by: Health and Family Welfare Department. Best viewed in Chrome, Microsoft Edge, Firefox, Safari, Opera Browsers. © 2022 Copyright
-</span>
+    <div class="stat-card bg-white rounded-xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-500">COVID Positive</p>
+                <p class="text-3xl font-bold text-warning-600 mt-1">{{ covid_positive }}</p>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-warning-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-3">{{ total_patients }} total patients tracked</p>
+    </div>
 
-{% endblock content %}
+    <div class="stat-card bg-white rounded-xl border border-gray-200 p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-500">Recovered</p>
+                <p class="text-3xl font-bold text-success-600 mt-1">{{ recovered }}</p>
+            </div>
+            <div class="w-12 h-12 rounded-lg bg-success-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-3">{{ deceased }} deceased</p>
+    </div>
+</div>
+
+<!-- Quick actions + summary -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <!-- ICU Beds Summary -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <h3 class="text-sm font-semibold text-gray-700 mb-4">ICU Capacity</h3>
+        <div class="flex items-end gap-2">
+            <span class="text-4xl font-bold text-gray-900">{{ icu_beds }}</span>
+            <span class="text-sm text-gray-500 mb-1">ICU beds available</span>
+        </div>
+        <div class="mt-4 w-full bg-gray-100 rounded-full h-2">
+            <div class="bg-primary-500 h-2 rounded-full" style="width: {% widthratio icu_beds total_beds 100 %}%"></div>
+        </div>
+    </div>
+
+    <!-- Recovery Rate -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <h3 class="text-sm font-semibold text-gray-700 mb-4">Recovery Rate</h3>
+        <div class="flex items-end gap-2">
+            <span class="text-4xl font-bold text-success-600">{% if total_patients %}{% widthratio recovered total_patients 100 %}{% else %}0{% endif %}%</span>
+            <span class="text-sm text-gray-500 mb-1">of patients recovered</span>
+        </div>
+        <div class="mt-4 w-full bg-gray-100 rounded-full h-2">
+            <div class="bg-success-500 h-2 rounded-full" style="width: {% if total_patients %}{% widthratio recovered total_patients 100 %}{% else %}0{% endif %}%"></div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <h3 class="text-sm font-semibold text-gray-700 mb-4">Quick Actions</h3>
+        <div class="space-y-3">
+            <a href="{% url 'hospital' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-50 hover:bg-primary-100 transition-colors">
+                <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                <span class="text-sm font-medium text-primary-700">View Hospitals</span>
+            </a>
+            <a href="{% url 'graphs' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-warning-50 hover:bg-warning-100 transition-colors">
+                <svg class="w-5 h-5 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                <span class="text-sm font-medium text-warning-700">View Analytics</span>
+            </a>
+            <a href="{% url 'helpline' %}" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-danger-50 hover:bg-danger-100 transition-colors">
+                <svg class="w-5 h-5 text-danger-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                <span class="text-sm font-medium text-danger-700">Emergency Helpline</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- COVID Prevention Tips -->
+<div class="bg-white rounded-xl border border-gray-200 p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-6">Prevention Guidelines</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto rounded-full bg-primary-100 flex items-center justify-center mb-3">
+                <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900">Wear Masks</h4>
+            <p class="text-sm text-gray-500 mt-1">Always wear a mask in public places</p>
+        </div>
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto rounded-full bg-success-100 flex items-center justify-center mb-3">
+                <svg class="w-8 h-8 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900">Wash Hands</h4>
+            <p class="text-sm text-gray-500 mt-1">Wash hands frequently with soap</p>
+        </div>
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto rounded-full bg-warning-100 flex items-center justify-center mb-3">
+                <svg class="w-8 h-8 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900">Social Distancing</h4>
+            <p class="text-sm text-gray-500 mt-1">Maintain 6 feet distance from others</p>
+        </div>
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto rounded-full bg-danger-100 flex items-center justify-center mb-3">
+                <svg class="w-8 h-8 text-danger-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </div>
+            <h4 class="font-semibold text-gray-900">Get Vaccinated</h4>
+            <p class="text-sm text-gray-500 mt-1">Take all doses of COVID vaccine</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
