@@ -2,11 +2,13 @@
 models.py
 """
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 User = get_user_model()
-# Create your models here.
+
+
 class Hospital(models.Model):
     """Hospital Model"""
 
@@ -38,17 +40,23 @@ class Hospital(models.Model):
         default=False,
         verbose_name="Ambulance",
     )
-    image_link = models.CharField(max_length=500)
-    ambulance_driver_name = models.CharField(max_length=100)
-    ambulance_driver_phone = PhoneNumberField()
+    image_link = models.CharField(max_length=500, blank=True)
+    ambulance_driver_name = models.CharField(max_length=100, blank=True)
+    ambulance_driver_phone = PhoneNumberField(blank=True)
 
-    @property
-    def _get_beds_available(self):
-        "Returns the person's full name."
-        return self.total_no_of_beds - self.bed_occupied
+    def clean(self):
+        super().clean()
+        if self.bed_occupied > self.total_no_of_beds:
+            raise ValidationError(
+                {"bed_occupied": "Beds occupied cannot exceed total beds"}
+            )
+        if self.no_icu_beds > self.total_no_of_beds:
+            raise ValidationError(
+                {"no_icu_beds": "ICU beds cannot exceed total beds"}
+            )
 
     def save(self, *args, **kwargs):
-        self.beds_available = self._get_beds_available
+        self.beds_available = self.total_no_of_beds - self.bed_occupied
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -67,8 +75,8 @@ class Patient(models.Model):
         User, editable=False, null=True, blank=True, on_delete=models.DO_NOTHING
     )
     covid_positive = models.BooleanField(default=False)
-    deceased = models.BooleanField(default=False)  # If patient is deceased
-    recovered = models.BooleanField(default=False)  # If patient is recovered
+    deceased = models.BooleanField(default=False)
+    recovered = models.BooleanField(default=False)
     dob = models.DateField()
     GENDER_CHOICES = (
         ("M", "Male"),
@@ -87,6 +95,13 @@ class Patient(models.Model):
         ("V", "Vaccination"),
     )
     case = models.CharField(max_length=1, choices=CASE_CHOICES)
+
+    def clean(self):
+        super().clean()
+        if self.recovered and self.deceased:
+            raise ValidationError(
+                "Patient cannot be both recovered and deceased"
+            )
 
     def __str__(self):
         return f"{self.name}"

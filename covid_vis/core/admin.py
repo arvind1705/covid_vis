@@ -4,6 +4,16 @@ from .models import Hospital, Patient
 
 
 class HospitalAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "city",
+        "total_no_of_beds",
+        "beds_available",
+        "is_covid_care_center",
+        "hospital_admin",
+    )
+    list_filter = ("is_covid_care_center", "city")
+    search_fields = ("name", "address", "city")
     exclude = ("beds_available",)
 
     def get_queryset(self, request):
@@ -13,11 +23,22 @@ class HospitalAdmin(admin.ModelAdmin):
         return qs.filter(hospital_admin=request.user)
 
 
-class PersonAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "created_by", "created_at", "updated_at")
+class PatientAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+        "phone",
+        "covid_positive",
+        "vaccination_status",
+        "case",
+        "recovered",
+        "deceased",
+        "created_by",
+    )
+    list_filter = ("covid_positive", "vaccination_status", "case", "recovered", "deceased")
+    search_fields = ("id", "name", "phone", "email")
     exclude = ("created_by",)
     actions = None
-    search_fields = ["id", "name"]
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -32,4 +53,4 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Hospital, HospitalAdmin)
-admin.site.register(Patient, PersonAdmin)
+admin.site.register(Patient, PatientAdmin)
